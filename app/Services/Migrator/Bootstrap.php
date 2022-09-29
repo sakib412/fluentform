@@ -5,7 +5,7 @@ namespace FluentForm\App\Services\Migrator;
 use FluentForm\App\Services\Migrator\Classes\NinjaFormsMigrator;
 use FluentForm\App\Services\Migrator\Classes\CalderaMigrator;
 use FluentForm\App\Services\Migrator\Classes\GravityFormsMigrator;
-
+use FluentForm\App\Services\Migrator\Classes\WpFormsMigrator;
 class Bootstrap
 {
     protected $importer;
@@ -41,6 +41,12 @@ class Bootstrap
                 'key'  => 'gravityform',
             ];
         }
+        if ((new WpFormsMigrator())->exist()) {
+            $migratorLinks[] = [
+                'name' => 'WP Forms',
+                'key'  => 'wpforms',
+            ];
+        }
         return $migratorLinks;
 
     }
@@ -57,6 +63,9 @@ class Bootstrap
                 break;
             case 'gravityform':
                 $this->importer = new GravityFormsMigrator();
+                break;
+            case 'wpforms':
+                $this->importer = new WpFormsMigrator();
                 break;
             default:
                 wp_send_json([

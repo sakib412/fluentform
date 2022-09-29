@@ -41,9 +41,10 @@ abstract class BaseMigrator
                 if (!empty($selectedForms) && !in_array($formId, $selectedForms)) {
                     continue;
                 }
-
-                if ($this->getFields($formItem)) {
-                    $formFields = json_encode($this->getFields($formItem));
+    
+                $formFields = $this->getFields($formItem);
+                if ($formFields) {
+                    $formFields = json_encode($formFields);
                 } else {
                     $failed[] = $this->getFormName($formItem);
                     continue;
@@ -108,6 +109,10 @@ abstract class BaseMigrator
     abstract protected function getFormName($form);
 
     abstract protected function getFormMetas($form);
+    
+    abstract protected function getFormsFormatted();
+    
+    abstract protected function exist();
 
     public function getFluentClassicField($field, $args = [])
     {
@@ -1404,7 +1409,6 @@ abstract class BaseMigrator
         if ($metas) {
             //when multiple notifications
             if ($notifications = ArrayHelper::get($metas, 'notifications')) {
-                //remove previous notifications
                 (new \FluentForm\App\Modules\Form\Form(wpFluentForm()))->deleteMeta($formId, 'notifications');
                 foreach ($notifications as $notify) {
                     $settings = [
@@ -1416,6 +1420,20 @@ abstract class BaseMigrator
                     wpFluent()->table('fluentform_form_meta')->insert($settings);
                 }
                 unset($metas['notifications']);
+            }
+            //when multiple confirmations
+            if ($confirmations = ArrayHelper::get($metas, 'confirmations')) {
+                (new \FluentForm\App\Modules\Form\Form(wpFluentForm()))->deleteMeta($formId, 'confirmations');
+                foreach ($confirmations as $confirmation) {
+                    $settings = [
+                        'form_id'  => $formId,
+                        'meta_key' => 'confirmations',
+                        'value'    => json_encode($confirmation)
+                    ];
+
+                    wpFluent()->table('fluentform_form_meta')->insert($settings);
+                }
+                unset($metas['confirmations']);
             }
             foreach ($metas as $metaKey => $metaData) {
                 (new \FluentForm\App\Modules\Form\Form(wpFluentForm()))->updateMeta($formId, $metaKey, $metaData);
