@@ -21,12 +21,11 @@ abstract class BaseMigrator
                 'message' => sprintf(__('%s is not installed.', 'fluentform'), $this->title),
             ]);
         }
-
+    
         $failed = [];
-        $refs = [];
-
+    
         $forms = $this->getForms();
-
+    
         if (!$forms) {
             wp_send_json_error([
                 'message' => __('No forms found!', 'fluentform'),
@@ -36,6 +35,7 @@ abstract class BaseMigrator
         $refs = get_option('__ff_imorted_forms_map');
         $refs = is_array($refs) ? $refs : [];
         if ($forms && is_array($forms)) {
+            
             foreach ($forms as $formItem) {
                 $formId = $this->getFormId($formItem);
                 if (!empty($selectedForms) && !in_array($formId, $selectedForms)) {
@@ -81,7 +81,6 @@ abstract class BaseMigrator
                 $msg = "These forms was not imported for invalid data : " . implode(', ', $failed);
             }
             if (count($insertedForms) > 0) {
-
                 update_option('__ff_imorted_forms_map', $refs, 'no');
                 wp_send_json([
                     'status'             => true,

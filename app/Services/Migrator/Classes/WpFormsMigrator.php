@@ -146,7 +146,7 @@ class WpFormsMigrator extends BaseMigrator
         $args = [
             'uniqElKey'       => $field['id'] . '-' . time(),
             'index'           => $field['id'],
-            'required'        => ArrayHelper::exists($field, 'required'),
+            'required'        => ArrayHelper::isTrue($field, 'required'),
             'label'           => $field['label'],
             'name'            => ArrayHelper::get($field, 'type') . '_' . $field['id'],
             'placeholder'     => ArrayHelper::get($field, 'placeholder', ''),
@@ -189,10 +189,11 @@ class WpFormsMigrator extends BaseMigrator
                     $args['format'] = 'd/m/Y';
                 }
                 break;
-            case 'input_number':
+            case 'rangeslider':
                 $args['step'] = $field['step'];
                 $args['min'] = $field['min'];
                 $args['max'] = $field['max'];
+               
                 break;
             case 'input_hidden':
                 $args['value'] = ArrayHelper::get($field, 'default', '');
@@ -227,6 +228,7 @@ class WpFormsMigrator extends BaseMigrator
             'radio'         => 'input_radio',
             'checkbox'      => 'input_checkbox',
             'number-slider' => 'rangeslider',
+            'number'      => 'input_number',
 
 
 
@@ -236,7 +238,6 @@ class WpFormsMigrator extends BaseMigrator
 //            'multiselect' => 'multi_select',
 //            'date'        => 'input_date',
 //            'time'        => 'input_date',
-//            'number'      => 'input_number',
 //            'fileupload'  => 'input_file',
 //            'consent'     => 'terms_and_condition',
 //            'captcha'     => 'reCaptcha',
