@@ -209,7 +209,7 @@ abstract class BaseMigrator
                             'visible'            => ArrayHelper::get($args, 'input_name_args.first_name.visible'),
                             'validation_rules'   => [
                                 'required' => [
-                                    'value'   => false,
+                                    'value'   => ArrayHelper::isTrue($args, 'input_name_args.first_name.required'),
                                     'message' => __('This field is required', 'fluentform'),
                                 ],
                             ],
@@ -239,7 +239,7 @@ abstract class BaseMigrator
                             'visible'            => ArrayHelper::get($args, 'input_name_args.middle_name.visible'),
                             'validation_rules'   => [
                                 'required' => [
-                                    'value'   => false,
+                                    'value'   => ArrayHelper::isTrue($args, 'input_name_args.middle_name.required'),
                                     'message' => __('This field is required', 'fluentform'),
                                 ],
                             ],
@@ -269,7 +269,7 @@ abstract class BaseMigrator
                             'visible'            => ArrayHelper::get($args, 'input_name_args.last_name.visible'),
                             'validation_rules'   => [
                                 'required' => [
-                                    'value'   => false,
+                                    'value'   => ArrayHelper::isTrue($args, 'input_name_args.last_name.required'),
                                     'message' => __('This field is required', 'fluentform'),
                                 ],
                             ],

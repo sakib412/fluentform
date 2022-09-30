@@ -157,6 +157,28 @@ class WpFormsMigrator extends BaseMigrator
         ];
         
         switch ($type) {
+            case 'input_name':
+                $args['input_name_args'] = [];
+                $fields = ArrayHelper::get($field, 'format');
+                if (!$fields) {
+                    break;
+                }
+                $fields = explode('-', $fields);
+                $required = ArrayHelper::isTrue($field, 'required');
+                foreach ($fields as $subField) {
+                    if ($subField == 'simple') {
+                        $label = $args['label'];
+                        $subName = 'first_name';
+                    } else {
+                        $subName = $subField . '_name';
+                        $label = ucfirst($subField);
+                    }
+                    $args['input_name_args'][$subName]['label'] = $label;
+                    $args['input_name_args'][$subName]['visible'] = true;
+                    $args['input_name_args'][$subName]['required'] = $required;
+                    $args['input_name_args'][$subName]['name'] = $subName;
+                }
+                break;
             case 'select':
             case 'input_radio':
             case 'input_checkbox':
