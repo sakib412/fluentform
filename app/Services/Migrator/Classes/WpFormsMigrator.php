@@ -169,14 +169,26 @@ class WpFormsMigrator extends BaseMigrator
                     if ($subField == 'simple') {
                         $label = $args['label'];
                         $subName = 'first_name';
+                        $hideLabel = ArrayHelper::isTrue($field, 'label_hide');
                     } else {
                         $subName = $subField . '_name';
                         $label = ucfirst($subField);
+                        $hideLabel = ArrayHelper::isTrue($field, 'sublabel_hide');
                     }
-                    $args['input_name_args'][$subName]['label'] = $label;
-                    $args['input_name_args'][$subName]['visible'] = true;
-                    $args['input_name_args'][$subName]['required'] = $required;
-                    $args['input_name_args'][$subName]['name'] = $subName;
+                    $placeholder = ArrayHelper::get($field, $subField . "_placeholder" , '');
+                    $default = ArrayHelper::get($field, $subField . "_default" , '');
+                    $args['input_name_args'][$subName] = [
+                        "visible" => true,
+                        "required" => $required,
+                        "name" => $subName,
+                        "default" => $default,
+                    ];
+                    if (!$hideLabel) {
+                        $args['input_name_args'][$subName]['label'] = $label;
+                    }
+                    if ($placeholder) {
+                        $args['input_name_args'][$subName]['placeholder'] = $placeholder;
+                    }
                 }
                 break;
             case 'select':

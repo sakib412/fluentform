@@ -196,17 +196,17 @@ abstract class BaseMigrator
                         'attributes'     => [
                             'type'        => 'text',
                             'name'        => ArrayHelper::get($args, 'input_name_args.first_name.name'),
-                            'value'       => '',
+                            'value'       => ArrayHelper::get($args, 'input_name_args.first_name.default', ''),
                             'id'          => '',
                             'class'       => '',
-                            'placeholder' => __('First Name', 'fluentform'),
+                            'placeholder' => ArrayHelper::get($args, 'input_name_args.first_name.placeholder' ,__('First Name', 'fluentform')),
                             'maxlength'   => '',
                         ],
                         'settings'       => [
                             'container_class'    => '',
                             'label'              => ArrayHelper::get($args, 'input_name_args.first_name.label'),
                             'help_message'       => '',
-                            'visible'            => ArrayHelper::get($args, 'input_name_args.first_name.visible'),
+                            'visible'            => ArrayHelper::isTrue($args, 'input_name_args.first_name.visible'),
                             'validation_rules'   => [
                                 'required' => [
                                     'value'   => ArrayHelper::isTrue($args, 'input_name_args.first_name.required'),
@@ -224,10 +224,10 @@ abstract class BaseMigrator
                         'attributes'     => [
                             'type'        => 'text',
                             'name'        => ArrayHelper::get($args, 'input_name_args.middle_name.name'),
-                            'value'       => '',
+                            'value'       => ArrayHelper::get($args, 'input_name_args.middle_name.default', ''),
                             'id'          => '',
                             'class'       => '',
-                            'placeholder' => __('Middle Name', 'fluentform'),
+                            'placeholder' => ArrayHelper::get($args, 'input_name_args.middle_name.placeholder' , __('Middle Name', 'fluentform')),
                             'required'    => false,
                             'maxlength'   => '',
                         ],
@@ -236,7 +236,7 @@ abstract class BaseMigrator
                             'label'              => ArrayHelper::get($args, 'input_name_args.middle_name.label'),
                             'help_message'       => '',
                             'error_message'      => '',
-                            'visible'            => ArrayHelper::get($args, 'input_name_args.middle_name.visible'),
+                            'visible'            => ArrayHelper::isTrue($args, 'input_name_args.middle_name.visible'),
                             'validation_rules'   => [
                                 'required' => [
                                     'value'   => ArrayHelper::isTrue($args, 'input_name_args.middle_name.required'),
@@ -254,10 +254,10 @@ abstract class BaseMigrator
                         'attributes'     => [
                             'type'        => 'text',
                             'name'        => ArrayHelper::get($args, 'input_name_args.last_name.name'),
-                            'value'       => '',
+                            'value'       => ArrayHelper::get($args, 'input_name_args.last_name.default', ''),
                             'id'          => '',
                             'class'       => '',
-                            'placeholder' => __('Last Name', 'fluentform'),
+                            'placeholder' => ArrayHelper::get($args, 'input_name_args.last_name.placeholder', __('Last Name', 'fluentform')),
                             'required'    => false,
                             'maxlength'   => '',
                         ],
@@ -266,7 +266,7 @@ abstract class BaseMigrator
                             'label'              => ArrayHelper::get($args, 'input_name_args.last_name.label'),
                             'help_message'       => '',
                             'error_message'      => '',
-                            'visible'            => ArrayHelper::get($args, 'input_name_args.last_name.visible'),
+                            'visible'            => ArrayHelper::isTrue($args, 'input_name_args.last_name.visible'),
                             'validation_rules'   => [
                                 'required' => [
                                     'value'   => ArrayHelper::isTrue($args, 'input_name_args.last_name.required'),
