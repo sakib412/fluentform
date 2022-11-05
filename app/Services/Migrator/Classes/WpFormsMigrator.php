@@ -287,6 +287,15 @@ class WpFormsMigrator extends BaseMigrator
         ];
         
         switch ($type) {
+            case 'input_text':
+                $max_length = ArrayHelper::get($field, 'limit_count', '');
+                if ($max_length && $mode = ArrayHelper::get($field, 'limit_mode')) {
+                    if ("words" == $mode && is_string($max_length)) {
+                        $max_length = (int)$max_length * 6; // average 6 characters is a word
+                    }
+                    $args['maxlength'] = $max_length;
+                }
+                break;
             case 'phone':
                 $args['valid_phone_number'] = "1";
                 break;
