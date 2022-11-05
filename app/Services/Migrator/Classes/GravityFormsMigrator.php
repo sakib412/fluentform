@@ -637,7 +637,7 @@ class GravityFormsMigrator extends BaseMigrator
                 // format entry value by field name
                 $finalValue = null;
                 if ("input_file" == $type && $value = $this->getSubmissionValue($id, $submission)) {
-                    $finalValue = $this->handleFileValue($value);
+                    $finalValue = $this->migrateFilesAndGetUrls($value);
                 } elseif ("repeater_field" == $type && $value = $this->getSubmissionValue($id, $submission)) {
                     if ($repeatData = (array)maybe_unserialize($value)) {
                         $finalValue = [];
@@ -667,6 +667,12 @@ class GravityFormsMigrator extends BaseMigrator
                     $finalValue = is_object($fieldModel) ? $fieldModel->get_value_export($submission, $id) : '';
                 }
                 $entry[$name] = $finalValue;
+            }
+            if ($created_at = ArrayHelper::get($submission, 'date_created')) {
+                $entry['created_at'] = $created_at;
+            }
+            if ($updated_at = ArrayHelper::get($submission, 'date_updated')) {
+                $entry['updated_at'] = $updated_at;
             }
             $entries[] = $entry;
         }
@@ -722,26 +728,4 @@ class GravityFormsMigrator extends BaseMigrator
     {
         return  isset($submission[$id]) ? $submission[$id] : "";
     }
-
-    protected function handleFileValue($url)
-    {
-        $value = [];
-        $file_name = 'ff-' . wp_basename($url);
-        $basDir = wp_upload_dir()['basedir'] . '/fluentform/';
-        $baseurl = wp_upload_dir()['baseurl'] . '/fluentform/';
-        if ((!file_exists($basDir)) || (file_exists($basDir) && !is_dir($basDir))) {
-            mkdir($basDir);
-        }
-
-        $destination = $basDir . $file_name;
-
-        require_once(ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php');
-        require_once(ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php');
-        $fileSystemDirect = new \WP_Filesystem_Direct(false);
-        if ($fileSystemDirect->copy($url, $destination, true)) {
-            $value[] = $baseurl .  $file_name;
-        }
-        return $value;
-    }
-
 }

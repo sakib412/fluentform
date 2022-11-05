@@ -560,6 +560,12 @@ class NinjaFormsMigrator extends BaseMigrator
             $values = $submission->get_field_values();
             $values = ArrayHelper::only($values, $fieldsMap);
             $values = $this->formatEntries($values);
+            if ($created_at = $submission->get_sub_date('Y-m-d H:i:s')) {
+                $values['created_at'] = $created_at;
+            }
+            if ($updated_at = $submission->get_mod_date('Y-m-d H:i:s')) {
+                $values['updated_at'] = $updated_at;
+            }
             $entries[] = $values;
         }
         return $entries;

@@ -1605,6 +1605,14 @@ abstract class BaseMigrator
             if ($previousItem) {
                 $serialNumber = $previousItem->serial_number + 1;
             }
+            $created_at = ArrayHelper::get($entry, 'created_at');
+            if ($created_at) {
+                ArrayHelper::forget($entry, 'created_at');
+            }
+            $updated_at = ArrayHelper::get($entry, 'updated_at');
+            if ($updated_at) {
+                ArrayHelper::forget($entry, 'updated_at');
+            }
             $insertData = [
                 'form_id'       => $fluentFormId,
                 'serial_number' => $serialNumber,
@@ -1614,8 +1622,8 @@ abstract class BaseMigrator
                 'browser'       => '',
                 'device'        => '',
                 'ip'            => '',
-                'created_at'    => current_time('mysql'),
-                'updated_at'    => current_time('mysql')
+                'created_at'    => $created_at ?: current_time('mysql'),
+                'updated_at'    => $updated_at ?: current_time('mysql')
             ];
             $insertId = wpFluent()->table('fluentform_submissions')->insert($insertData);
 
@@ -1657,5 +1665,35 @@ abstract class BaseMigrator
             ->delete();
     }
 
+    /**
+     * @param array $urls
+     *
+     * @return array
+     */
+    public function migrateFilesAndGetUrls($urls)
+    {
+        if (is_string($urls)) {
+            $urls = [$urls];
+        }
+        $values = [];
+        foreach ($urls as $url) {
+            $file_name = 'ff-' . wp_basename($url);
+            $basDir = wp_upload_dir()['basedir'] . '/fluentform/';
+            $baseurl = wp_upload_dir()['baseurl'] . '/fluentform/';
+
+            if (!file_exists($basDir) || (file_exists($basDir) && !is_dir($basDir))) {
+                mkdir($basDir);
+            }
+
+            $destination = $basDir . $file_name;
+            require_once(ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php');
+            require_once(ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php');
+            $fileSystemDirect = new \WP_Filesystem_Direct(false);
+            if ($fileSystemDirect->copy($url, $destination, true)) {
+                $values[] = $baseurl . $file_name;
+            }
+        }
+        return $values;
+    }
 
 }
