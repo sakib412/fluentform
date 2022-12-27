@@ -121,9 +121,9 @@ export default {
     },
     methods: {
         getDynamicAuthLink(field){
-            if (field.link && this.integration[field.app_key_field_name]){
+            if (field.link && this.integration[field.dynamic_key_field_name]){
                 let link = field.link;
-                return link.replace("app_key", this.integration[field.app_key_field_name]);
+                return link.replace("dynamic_key_placeholder", this.integration[field.dynamic_key_field_name]);
             }
             return false;
 
