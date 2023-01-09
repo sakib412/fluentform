@@ -616,12 +616,22 @@ class GravityFormsMigrator extends BaseMigrator
             return false;
         }
 
-        $submissions = \GFAPI::get_entries($formId);
+        /**
+         * Note - more-then 5000/6000 (based on network) entries process make timout response
+         * @todo need silently async processing for support all entries migrate at a time, and improve frontend entry-migrate with more settings options
+         */
+        $perPage = 5000;
+        $offset = 0;
+        $paging = [
+            'offset'    => $offset,
+            'page_size' => $perPage
+        ];
+        $submissions = \GFAPI::get_entries($formId, [], [], $paging);
         $entries = [];
         if (!is_array($submissions)) {
             return $entries;
         }
-        
+
         $fieldsMap = $this->getFields($form);
         foreach ($submissions as $submission) {
             $entry = [];
