@@ -288,6 +288,10 @@ $element_customization_settings = [
                 'label' => __('Steps', 'fluentform'),
             ],
             [
+                'value' => 'steps_with_nav',
+                'label' => __('Steps with Navigation', 'fluentform'),
+            ],
+            [
                 'value' => '',
                 'label' => __('None', 'fluentform'),
             ],

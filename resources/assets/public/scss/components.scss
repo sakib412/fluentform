@@ -354,6 +354,9 @@
 
         /*CSS counters to number the steps*/
         counter-reset: step;
+        &-navs {
+          cursor: pointer;   
+        }
 
         li {
           display: table-cell;

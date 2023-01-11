@@ -197,6 +197,7 @@ export default function ($, $theForm, fluentFormVars, formSelector) {
         const formSteps = $theForm.find('.fluentform-step');
         const totalSteps = formSteps.length;
         const stepTitles = $theForm.find('.ff-step-titles li');
+        const stepTitlesNavs = $theForm.find('.ff-step-titles-navs li');
 
         wrapperWidth = (100 * totalSteps) + '%';
 
@@ -214,7 +215,55 @@ export default function ($, $theForm, fluentFormVars, formSelector) {
         stepProgressBarHandle({activeStep, totalSteps});
 
         registerStepNavigators(fluentFormVars.stepAnimationDuration);
+
+        maybeRegisterClickableStepNav(stepTitlesNavs,formSteps);
     };
+
+    /**
+     * Register clickable step navigation
+     * @param  {object} stepTitlesNavs
+     * @param {object} formSteps
+     */
+    var maybeRegisterClickableStepNav = function (stepTitlesNavs, formSteps) {
+        if (stepTitlesNavs.length === 0) {
+            return;
+        }
+        $.each(stepTitlesNavs, function (i, elm) {
+            $(elm).attr('data-step-number', i)
+        });
+        stepTitlesNavs.on('click', function (e) {
+            let formInstance = getFormInstance();
+            let $this = $(this);
+            let currentStep = 0;
+
+            try {
+                let targetStep = $this.data('step-number');
+                if (isNaN(targetStep)) {
+                    return;
+                }
+                //validate other steps before target step before next step
+                $.each(formSteps, (index, steps) => {
+                    currentStep = index
+                    if (index < targetStep) {
+                        const elements = $(steps).find(':input').not(':button').filter(function (i, el) {
+                            return !$(el).closest('.has-conditions').hasClass('ff_excluded');
+                        });
+                        elements.length && formInstance.validate(elements)
+                    }
+                });
+
+                updateSlider(targetStep, fluentFormVars.stepAnimationDuration, true);
+
+            } catch (e) {
+                if (!(e instanceof window.ffValidationError)) {
+                    throw e;
+                }
+                updateSlider(currentStep, fluentFormVars.stepAnimationDuration, true);
+                formInstance.showErrorMessages(e.messages);
+                formInstance.scrollToFirstError(350);
+            }
+        })
+    }
 
     /**
      * Action occurs on step change/form load
