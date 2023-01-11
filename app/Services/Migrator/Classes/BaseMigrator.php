@@ -1174,7 +1174,7 @@ abstract class BaseMigrator
                             'visible'            => ArrayHelper::get($args, 'address_args.address_line_1.visible'),
                             'validation_rules'   => [
                                 'required' => [
-                                    'value'   => false,
+                                    'value'   => ArrayHelper::isTrue($args, 'address_args.address_line_1.required'),
                                     'message' => __('This field is required', 'fluentform'),
                                 ],
                             ],
@@ -1202,7 +1202,7 @@ abstract class BaseMigrator
                             'visible'            => ArrayHelper::get($args, 'address_args.address_line_2.visible'),
                             'validation_rules'   => [
                                 'required' => [
-                                    'value'   => false,
+                                    'value'   => ArrayHelper::isTrue($args, 'address_args.address_line_2.required'),
                                     'message' => __('This field is required', 'fluentform'),
                                 ],
                             ],
@@ -1231,7 +1231,7 @@ abstract class BaseMigrator
                             'visible'            => ArrayHelper::get($args, 'address_args.city.visible'),
                             'validation_rules'   => [
                                 'required' => [
-                                    'value'   => false,
+                                    'value'   => ArrayHelper::isTrue($args, 'address_args.city.required'),
                                     'message' => __('This field is required', 'fluentform'),
                                 ],
                             ],
@@ -1245,7 +1245,7 @@ abstract class BaseMigrator
                         'element'        => 'input_text',
                         'attributes'     => [
                             'type'        => 'text',
-                            'name'        => ArrayHelper::get($args, 'address_args.state.state'),
+                            'name'        => ArrayHelper::get($args, 'address_args.state.name'),
                             'value'       => '',
                             'id'          => '',
                             'class'       => '',
@@ -1260,7 +1260,7 @@ abstract class BaseMigrator
                             'visible'            => ArrayHelper::get($args, 'address_args.state.visible'),
                             'validation_rules'   => [
                                 'required' => [
-                                    'value'   => false,
+                                    'value'   => ArrayHelper::isTrue($args, 'address_args.state.required'),
                                     'message' => __('This field is required', 'fluentform'),
                                 ],
                             ],
@@ -1290,7 +1290,7 @@ abstract class BaseMigrator
                             'visible'            => ArrayHelper::get($args, 'address_args.zip.visible'),
                             'validation_rules'   => [
                                 'required' => [
-                                    'value'   => false,
+                                    'value'   => ArrayHelper::isTrue($args, 'address_args.zip.required'),
                                     'message' => __('This field is required', 'fluentform'),
                                 ],
                             ],
@@ -1319,7 +1319,7 @@ abstract class BaseMigrator
                             'visible'            => ArrayHelper::get($args, 'address_args.country.visible'),
                             'validation_rules'   => [
                                 'required' => [
-                                    'value'   => false,
+                                    'value'   => ArrayHelper::isTrue($args, 'address_args.country.required'),
                                     'message' => __('This field is required', 'fluentform'),
                                 ],
                             ],

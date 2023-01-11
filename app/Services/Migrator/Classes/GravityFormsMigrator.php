@@ -239,36 +239,43 @@ class GravityFormsMigrator extends BaseMigrator
      */
     private function getAddressArgs(array $field)
     {
+        $required = ArrayHelper::isTrue($field, 'isRequired');
         return [
             'address_line_1' => [
                 'name'    => $this->getInputName($field['inputs'][0]),
                 'label'   => $field['inputs'][0]['label'],
                 'visible' => ArrayHelper::get($field, 'inputs.0.isHidden', true),
+                'required' => $required,
             ],
             'address_line_2' => [
                 'name'    => $this->getInputName($field['inputs'][1]),
                 'label'   => $field['inputs'][1]['label'],
                 'visible' => ArrayHelper::get($field, 'inputs.1.isHidden', true),
+                'required' => $required,
             ],
             'city'           => [
                 'name'    => $this->getInputName($field['inputs'][2]),
                 'label'   => $field['inputs'][2]['label'],
                 'visible' => ArrayHelper::get($field, 'inputs.2.isHidden', true),
+                'required' => $required,
             ],
             'state'          => [
                 'name'    => $this->getInputName($field['inputs'][3]),
                 'label'   => $field['inputs'][3]['label'],
                 'visible' => ArrayHelper::get($field, 'inputs.3.isHidden', true),
+                'required' => $required,
             ],
             'zip'            => [
                 'name'    => $this->getInputName($field['inputs'][4]),
                 'label'   => $field['inputs'][4]['label'],
                 'visible' => ArrayHelper::get($field, 'inputs.4.isHidden', true),
+                'required' => $required,
             ],
             'country'        => [
                 'name'    => $this->getInputName($field['inputs'][5]),
                 'label'   => $field['inputs'][5]['label'],
                 'visible' => ArrayHelper::get($field, 'inputs.5.isHidden', true),
+                'required' => $required,
             ],
         ];
     }
