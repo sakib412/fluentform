@@ -168,6 +168,7 @@ class Form
             'disable_branding'      => 'no',
             'hide_media_on_mobile'  => 'no',
             'key_hint'              => 'yes',
+            'asteriskPlacement'        => $this->getAsteriskPlacement($formId)
         ];
 
         return wp_parse_args($settings, $defaults);
@@ -790,5 +791,28 @@ class Form
         }
 
         return $paymentConfig;
+    }
+
+    protected function getAsteriskPlacement($formId)
+    {
+        $asteriskPlacement = 'asterisk-right';
+
+        $formSettings = wpFluent()
+            ->table('fluentform_form_meta')
+            ->where('form_id', $formId)
+            ->where('meta_key', 'formSettings')
+            ->first();
+
+        if (! $formSettings) {
+            return '';
+        }
+
+        $formSettings = json_decode($formSettings->value, true);
+
+        if (isset($formSettings['layout']['asteriskPlacement'])) {
+            $asteriskPlacement = $formSettings['layout']['asteriskPlacement'];
+        }
+
+        return $asteriskPlacement;
     }
 }
