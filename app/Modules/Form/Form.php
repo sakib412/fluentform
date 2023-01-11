@@ -580,6 +580,9 @@ class Form
                 $extras[$meta->meta_key][] = $meta;
                 continue;
             }
+            if ("ffc_form_settings_generated_css" == $meta->meta_key || "ffc_form_settings_meta" == $meta->meta_key) {
+                $meta->value = str_replace('ff_conv_app_' . $formId, 'ff_conv_app_' . $newFormId, $meta->value);
+            }
             $metaData = [
                 'meta_key' => $meta->meta_key,
                 'value'    => $meta->value,
