@@ -97,9 +97,18 @@
 
 .ff_condition_icon {
   position: absolute;
-  right: 17px;
+  right: 8px;
+  top:8px;
   color: #9ca1a7;
   z-index: 99999999;
+}
+
+.ff_conv_section, .item-container {
+  &> .ff_condition_icon {
+    top: 12px;
+    right: 17px;
+    z-index: 2;
+  }
 }
 
 .search-element {

@@ -1,5 +1,6 @@
 <template>
     <div class="ff_conv_section" v-if="supportedFields.includes(item.element)">
+        <div class="ff_condition_icon" v-html="maybeConditionIcon(item.settings)"></div>
         <vddl-draggable class="panel__body--item js-editor-item"
                         :class="{ 'selected': editItem.uniqElKey == item.uniqElKey }"
                         :draggable="item"
