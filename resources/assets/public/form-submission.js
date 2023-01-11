@@ -429,6 +429,19 @@ jQuery(document).ready(function () {
                         .not(':first')
                         .remove();
 
+                    // reset image type checkbox and radio field
+                    let checkedTypeInputs = $this.find('input[type=checkbox],input[type=radio]');
+                    if (checkedTypeInputs.length) {
+                        checkedTypeInputs.each((index, el) => {
+                            el = $(el);
+                            if (!el.prop('defaultChecked')) {
+                                el.closest('.ff-el-form-check.ff_item_selected').removeClass('ff_item_selected');
+                            } else {
+                                el.closest('.ff-el-form-check').addClass('ff_item_selected');
+                            }
+                        })
+                    }
+
                     $this.find('input[type=file]').closest('div').find('.ff-uploaded-list').html('')
                         .end().closest('div')
                         .find('.ff-upload-progress')
