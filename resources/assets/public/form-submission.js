@@ -1122,6 +1122,10 @@ jQuery(document).ready(function () {
                             .find('.ff-upload-preview[data-src]')
                             .length;
                     } else {
+                        //solution for range slider required
+                        if (el.attr('is-changed') == 'false') {
+                            return '';
+                        }
                         return String($.trim(el.val())).length;
                     }
                 };
