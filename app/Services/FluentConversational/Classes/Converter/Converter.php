@@ -27,6 +27,7 @@ class Converter
         $allowedFields = static::fieldTypes();
 
         foreach ($fields as $field) {
+            $field = apply_filters('fluentform_rendering_field_data_' . $field['element'], $field, $form);
             $question = [
                 'id'              => $field['uniqElKey'],
                 'name'            => ArrayHelper::get($field, 'attributes.name'),

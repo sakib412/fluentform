@@ -634,6 +634,7 @@ class Form
             }
         }
 
+        $form = wpFluentForm()->applyFilters('fluentform_rendering_form', $form);
         $form = Converter::convert($form);
 
         $formSettings = wpFluent()
