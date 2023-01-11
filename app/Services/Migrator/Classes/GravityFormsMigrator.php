@@ -617,10 +617,11 @@ class GravityFormsMigrator extends BaseMigrator
         }
 
         /**
-         * Note - more-then 5000/6000 (based on network) entries process make timout response
+         * Note - more-then 5000/6000 (based on sever) entries process make timout response / set default limit 1000
          * @todo need silently async processing for support all entries migrate at a time, and improve frontend entry-migrate with more settings options
          */
-        $perPage = 5000;
+        $totalEntries = \GFAPI::count_entries($formId);
+        $perPage = apply_filters('fluentform_entry_migrate_max_limit_for_gravityform', 1000, $totalEntries, $formId);
         $offset = 0;
         $paging = [
             'offset'    => $offset,
