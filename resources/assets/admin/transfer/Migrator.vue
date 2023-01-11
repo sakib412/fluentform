@@ -322,7 +322,7 @@ export default {
             return this.paginate(this.forms);
         },
         entryImportSupported() {
-            let supported = ['caldera', 'ninja_forms', 'gravityform'];
+            let supported = ['caldera', 'ninja_forms', 'gravityform', 'wpforms'];
             return supported.indexOf(this.currentFormType) !== -1
         },
     },
