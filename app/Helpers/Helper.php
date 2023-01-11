@@ -446,7 +446,7 @@ class Helper
             return $input;
         }
         $settings = $formatters[$formatterName]['settings'];
-        $number = floatval(str_replace($settings['decimal'], '.', preg_replace('/[^\d' . preg_quote($settings['decimal']) . ']/', '', $input)));
+        $number = floatval(str_replace($settings['decimal'], '.', preg_replace('/[^-?\d' . preg_quote($settings['decimal']) . ']/', '', $input)));
 
         return number_format($number, $settings['precision'], '.', '');
     }
