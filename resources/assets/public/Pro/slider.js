@@ -54,8 +54,8 @@ export default function ($, $theForm, fluentFormVars, formSelector) {
             });
         });
     };
-
     var populateFormDataAndSetActiveStep = function ({response, step_completed}) {
+        let choiceJsInputs = [] ;
         jQuery.each(response, (key, value) => {
             if (!value) return;
 
@@ -119,7 +119,11 @@ export default function ($, $theForm, fluentFormVars, formSelector) {
                 } else if ($el.prop('multiple')) {
                     if ($.isFunction(window.Choices)) {
                         let choiceJs  = $el.data('choicesjs');
-                        choiceJs.setValue(value).change();
+
+                        choiceJsInputs.push( {
+                            handler : choiceJs,
+                            values : value
+                        });
                     }else{
                         $el.val(value).change();
                     }
@@ -175,6 +179,12 @@ export default function ($, $theForm, fluentFormVars, formSelector) {
                 }
             }
         });
+        // populate ChoiceJs Values separately as it breaks the loop
+        if (choiceJsInputs.length > 0 ){
+            for (let i = 0; i < choiceJsInputs.length ; i++) {
+                choiceJsInputs[i].handler.setValue(choiceJsInputs[i].values).change();
+            }
+        }
 
         isPopulatingStepData = true;
         // let saveProgressForm = $(formSelector).hasClass('ff-form-has-save-progress');
