@@ -193,6 +193,7 @@ class Form
                 'progress_text'        => '{percent}% completed',
                 'long_text_help'       => '<b>Shift ⇧</b> + <b>Enter ↵</b> to make a line break.',
                 'invalid_prompt'       => 'Please fill out the field correctly',
+                'errorMaxLength'       => 'The maximum {maxLength} number of characters accept',
                 'default_placeholder'  => 'Type Your answer here',
                 'key_hint_text'        => 'Key',
                 'key_hint_tooltip'     => 'Press the key to select',

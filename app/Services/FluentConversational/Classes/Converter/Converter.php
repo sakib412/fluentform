@@ -35,6 +35,7 @@ class Converter
                 'ff_input_type'   => $field['element'],
                 'container_class' => ArrayHelper::get($field, 'settings.container_class'),
                 'placeholder'     => ArrayHelper::get($field, 'attributes.placeholder'),
+                'maxLength'       => ArrayHelper::get($field, 'attributes.maxlength'),
                 'required'        => ArrayHelper::get($field, 'settings.validation_rules.required.value'),
                 'requiredMsg'     => ArrayHelper::get($field, 'settings.validation_rules.required.message'),
                 'errorMessage'    => ArrayHelper::get($field, 'settings.validation_rules.required.message'),
