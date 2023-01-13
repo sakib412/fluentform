@@ -71,7 +71,8 @@ import formSlider from "./Pro/slider";
                 hash: hash,
                 active_step: activeStep
             };
-
+            const saveProgressMessage = formData.form_id + '_save_progress_msg';
+            const savingResponseMsg = '#' + saveProgressMessage;
             jQuery.post(fluentFormVars.ajaxUrl, formData).then(data => {
                 if (data) {
                     hash = data.data.hash;
@@ -82,10 +83,9 @@ import formSlider from "./Pro/slider";
                     }
 
 
-                    const saveProgressMessage = formData.form_id + '_save_progress_msg';
-                    const successMsgSelector = '#' + saveProgressMessage;
-                    if ($(successMsgSelector).length) {
-                        $(successMsgSelector).slideUp('fast');
+
+                    if ($(savingResponseMsg).length) {
+                        $(savingResponseMsg).slideUp('fast');
                     }
                     $('<div/>', {
                         'id': saveProgressMessage,
@@ -125,7 +125,19 @@ import formSlider from "./Pro/slider";
 
                     }
                 }
-            }).always(function () {
+            }).fail(error => {
+                if ($(savingResponseMsg).length) {
+                    $(savingResponseMsg).slideUp('fast');
+                }
+                $('<div/>', {
+                    'id': saveProgressMessage,
+                    'class': 'ff-message-success ff-el-group text-danger'
+                })
+                    .html(error.responseJSON.data.Error)
+                    .insertBefore($saveBttn.closest('.ff-el-group'));
+
+            })
+                .always(function () {
                 $saveBttn.parent().hide();
             });
         });
