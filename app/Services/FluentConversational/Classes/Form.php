@@ -626,9 +626,28 @@ class Form
     private function renderFormHtml($formId, $providedKey = '')
     {
         $form = wpFluent()->table('fluentform_forms')->find($formId);
+
         if (! $form) {
             return '';
         }
+
+        $formSettings = wpFluent()
+            ->table('fluentform_form_meta')
+            ->where('form_id', $formId)
+            ->where('meta_key', 'formSettings')
+            ->first();
+
+        if (!$formSettings) {
+            return '';
+        }
+
+        $form->fields = json_decode($form->form_fields, true);
+
+        if (!$form->fields['fields']) {
+            return '';
+        }
+
+        $form->settings = json_decode($formSettings->value, true);
 
         $metaSettings = $this->getMetaSettings($formId);
 
