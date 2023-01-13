@@ -22,6 +22,7 @@
                 </ul>
             </div>
         </template>
+        <p v-if="listItem.inline_help_text" v-html="listItem.inline_help_text"></p>
     </el-form-item>
 </template>
 

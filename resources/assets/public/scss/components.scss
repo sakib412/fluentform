@@ -607,7 +607,28 @@
       }
     }
   }
+  .ff-saved-state-input {
+    .ff_input-group-text {
+      background-color: rgb(64, 158, 255);
 
+      &:hover {
+        background-color: #66b3ff;
+        opacity: 1;
+      }
+
+      img {
+        width: 28px;
+      }
+    }
+  }
+
+  .ff-saved-state-link input {
+    text-overflow: ellipsis;
+  }
+
+  .ff-hide-group {
+    display: none;
+  }
 
   .ff_t_c {
     padding: 0px 5px 0px 0px;
