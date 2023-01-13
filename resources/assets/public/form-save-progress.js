@@ -69,7 +69,8 @@ import formSlider from "./Pro/slider";
                 data: inputData,
                 form_id: $theForm.data('form_id'),
                 hash: hash,
-                active_step: activeStep
+                active_step: activeStep,
+                nonce: window.form_state_save_vars.nonce
             };
             const saveProgressMessage = formData.form_id + '_save_progress_msg';
             const savingResponseMsg = '#' + saveProgressMessage;
@@ -126,6 +127,7 @@ import formSlider from "./Pro/slider";
                     }
                 }
             }).fail(error => {
+
                 if ($(savingResponseMsg).length) {
                     $(savingResponseMsg).slideUp('fast');
                 }
@@ -133,7 +135,7 @@ import formSlider from "./Pro/slider";
                     'id': saveProgressMessage,
                     'class': 'ff-message-success ff-el-group text-danger'
                 })
-                    .html(error.responseJSON.data.Error)
+                    .html(error.responseJSON.data.message)
                     .insertBefore($saveBttn.closest('.ff-el-group'));
 
             })
@@ -161,7 +163,9 @@ import formSlider from "./Pro/slider";
                 form_id: $theForm.data('form_id'),
                 to_email: to_email,
                 link: link,
-                hash: hash
+                hash: hash,
+                nonce: window.form_state_save_vars.nonce
+
             };
             const emailResponse = formData.form_id + '_save_progress_email_response';
             const responseMessageSelector = '#' + emailResponse;
@@ -214,6 +218,8 @@ import formSlider from "./Pro/slider";
             form_id: $theForm.data('form_id'),
             action: 'fluentform_get_form_state',
             hash: hashKey,
+            nonce: window.form_state_save_vars.nonce
+
         }).then(data => {
             if (data) {
                 const sliderInstance = formSlider($, $theForm, window.fluentFormVars, formSelector);
