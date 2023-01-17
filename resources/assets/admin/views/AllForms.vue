@@ -184,7 +184,7 @@
                                             </ul>
                                         </div>
                                         <div v-if="Object.keys(formLocations).includes(scope.row.id) && formLocations[scope.row.id].length == 0 ">
-                                            {{$t('Could not Find Location')}}
+                                            {{$t('Could not find anywhere')}}
                                         </div>
                                     </div>
 
