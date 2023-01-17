@@ -108,6 +108,12 @@ class FormBuilder
 
         echo '<form ' . $formAtts . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $formAtts is escaped before being passed in.
 
+        $isAccessible = apply_filters('fluentform_disable_accessibility_fieldset', true, $form);
+
+        if ($isAccessible) {
+           echo '<fieldset><legend class="ff_screen_reader">'.$form->title.'</legend>';
+        }
+
         do_action('fluentform_form_element_start', $form);
 
         echo "<input type='hidden' name='__fluent_form_embded_post_id' value='" . get_the_ID() . "' />";
@@ -120,6 +126,10 @@ class FormBuilder
         );
 
         echo $formBody; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $formBody is escaped before being passed in.
+
+        if ($isAccessible) {
+            echo '</fieldset>';
+        }
 
         echo "</form><div id='fluentform_" . (int) $form->id . "_errors' class='ff-errors-in-stack ";
 

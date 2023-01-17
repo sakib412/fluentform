@@ -804,7 +804,6 @@ class Menu
                 $this->app->appPath('Services/FormBuilder/ValidationRuleSettings.php')
             ),
             'conversational_form_fields' => array_keys(Converter::fieldTypes()),
-
             'form_editor_str'            => TranslationString::getEditorI18n(),
             'element_search_tags'        => $searchTags,
             'element_settings_placement' => $elementPlacements,

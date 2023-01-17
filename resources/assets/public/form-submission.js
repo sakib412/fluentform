@@ -695,6 +695,7 @@ jQuery(document).ready(function () {
                                 'data-name': getElement(elementName).attr('name'),
                                 html: errorString
                             });
+                            errorHtml.attr('role', 'alert');
                             errorHtml.append(text, cross);
                             errorStack.append(errorHtml).show();
                         });
@@ -702,6 +703,7 @@ jQuery(document).ready(function () {
                         var element = getElement(elementName);
                         if (element) {
                             var name = element.attr('name');
+                            element.attr('aria-invalid', 'true');
                             var el = $('[name=\'' + name + '\']').first();
                             if (el) {
                                 el.closest('.ff-el-group').addClass('ff-el-is-error');
@@ -741,25 +743,28 @@ jQuery(document).ready(function () {
                         showErrorInStack([message]);
                         return;
                     }
-
+                    el.attr('aria-invalid', 'true');
                     div = $('<div/>', {class: 'error text-danger'});
+                    div.attr('role', 'alert');
                     el.closest('.ff-el-group').addClass('ff-el-is-error');
                     el.closest('.ff-el-input--content').find('div.error').remove();
                     el.closest('.ff-el-input--content').append(div.text(message));
                 };
 
                 var initInlineErrorItems = function () {
-                    var errorSetting = form['settings']['layout']['errorMessagePlacement'];
-                    if (!errorSetting || errorSetting == 'stackToBottom') {
-                        return;  // It's on bottom so We don't need to do anything
-                    }
                     $theForm.find('.ff-el-group,.ff_repeater_table').on('change', 'input,select,textarea', function () {
                         if (window.ff_disable_error_clear) {
                             return;
                         }
-                        var $parent = $(this).closest('.ff-el-group');
-                        if ($parent.hasClass('ff-el-is-error')) {
-                            $parent.removeClass('ff-el-is-error').find('.error.text-danger').remove();
+
+                        $(this).attr('aria-invalid', 'false');
+
+                        var errorSetting = form['settings']['layout']['errorMessagePlacement'];
+                        if (errorSetting || errorSetting != 'stackToBottom') {
+                            var $parent = $(this).closest('.ff-el-group');
+                            if ($parent.hasClass('ff-el-is-error')) {
+                                $parent.removeClass('ff-el-is-error').find('.error.text-danger').remove();
+                            }
                         }
                     });
                 };

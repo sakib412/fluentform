@@ -205,7 +205,7 @@ class Form
                 'helpMessagePlacement'  => 'with_label',
                 'errorMessagePlacement' => 'inline',
                 'cssClassName'          => '',
-                'asteriskPlacement'     => 'asterisk-right',
+                'asteriskPlacement'     => 'asterisk-right'
             ],
             'delete_entry_on_submission' => 'no',
         ];

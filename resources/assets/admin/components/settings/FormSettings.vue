@@ -17,9 +17,7 @@
                                 @click="saveSettings">
                                 {{loading ? $t('Saving ') : $t('Save ')}} {{ $t('Settings') }}
                             </el-button>
-
                         </div>
-                       
                     </el-col>
                 </el-row>
             </div>
@@ -440,7 +438,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="ff_settings_block" v-if="affiliate_wp">
                 <el-row class="setting_header">
                     <el-col :md="24">
