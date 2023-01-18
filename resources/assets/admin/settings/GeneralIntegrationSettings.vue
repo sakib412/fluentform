@@ -58,6 +58,10 @@
                         <a :target="field.target" :class="field.btn_class" :href="field.link">{{ field.link_text }}</a>
                         <p>{{ field.tips }}</p>
                     </template>
+                    <template v-else-if="field.type == 'dynamic_link'">
+                        <a :target="field.target" :disabled="!getDynamicAuthLink(field)" :class="field.btn_class" :href="getDynamicAuthLink(field)">{{ field.link_text }}</a>
+                        <p>{{ field.tips }}</p>
+                    </template>
                     <template v-else-if="field.type == 'checkbox-single'">
                         <el-checkbox v-model="integration[fieldKey]">
                             {{field.checkbox_label}}
@@ -116,6 +120,14 @@ export default {
         }
     },
     methods: {
+        getDynamicAuthLink(field){
+            if (field.link && this.integration[field.dynamic_key_field_name]){
+                let link = field.link;
+                return link.replace("dynamic_key_placeholder", this.integration[field.dynamic_key_field_name]);
+            }
+            return false;
+
+        },
         save() {
             this.saving = true;
             FluentFormsGlobal.$post({
@@ -138,7 +150,7 @@ export default {
                 })
                 .fail(error => {
                     this.integration.status = false;
-                    this.fail(error.responseJSON.data.message);
+                    this.$fail(error.responseJSON.data.message);
                 })
                 .always(() => {
                     this.saving = false;
