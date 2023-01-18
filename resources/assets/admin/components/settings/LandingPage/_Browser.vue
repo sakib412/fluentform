@@ -42,6 +42,12 @@
             }
         },
         watch: {
+            'settings.form_shadow' : {
+                handler(shadows) {
+                    this.setFormShadow(shadows)
+                },
+                deep: true
+            },
             'settings.brightness': {
                 handler(brightness) {
                     this.brightness(brightness);
@@ -173,6 +179,15 @@
                 if (this.iframe) {
                     this.iframe?.contents().scrollTop(0);
                 }
+            },
+            setFormShadow(shadows = []) {
+                 shadows = shadows.map(s => (s.position + ' ' +
+                    s.horizontal + "px " +
+                    s.vertical + 'px ' +
+                    s.blur + "px " +
+                    s.spread + 'px ' +
+                    s.color));
+                this.iframe?.contents().find(".ff_landing_form").attr('style',`box-shadow: ${shadows.join(',')} !important;`);
             }
         },
         mounted() {

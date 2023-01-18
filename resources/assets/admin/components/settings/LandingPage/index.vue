@@ -83,6 +83,25 @@
 
                         <el-form-item>
                             <template slot="label">
+                                {{ $t('Shadow') }}
+                                <el-tooltip class="item" placement="bottom-start" effect="light">
+                                    <div slot="content">
+                                        <h3>{{ $t('Form Container Shadow') }}</h3>
+                                        <p>
+                                            {{ $t('Choose Shadow for your form container') }}
+                                        </p>
+                                    </div>
+                                    <i class="el-icon-info el-text-info"></i>
+                                </el-tooltip>
+                            </template>
+                            <template  v-for="(item,i) in settings.form_shadow">
+                                <ff_boxshadow  :valueItem="item" />
+                            </template>
+
+                        </el-form-item>
+
+                        <el-form-item>
+                            <template slot="label">
                                 {{ $t('BG Image') }}
                                 <el-tooltip class="item" placement="bottom-start" effect="light">
                                     <div slot="content">
@@ -214,10 +233,12 @@
     import ConversionStylePref from "../../../conversion_templates/ConversionStylePref";
     import Browser from './_Browser';
     import Share from './_Sharing';
+    import Ff_boxshadow from './BoxShadow';
 
     export default {
         name: 'landing_pages',
         components: {
+            Ff_boxshadow,
             WpEditor,
             PhotoUploader,
             Browser,
@@ -321,6 +342,26 @@
                             settings.color_schema = 'custom';
                         }
 
+                        if (!settings.form_shadow || !settings.form_shadow.length) {
+                            settings.form_shadow = [
+                                {
+                                    position: "",
+                                    horizontal: "0",
+                                    vertical: "30",
+                                    blur: "40",
+                                    spread: "0",
+                                    color :"rgb(0 0 0 / 25%)"
+                                },
+                                {
+                                    position: "inset",
+                                    horizontal: "0",
+                                    vertical: "4",
+                                    blur: "0",
+                                    spread: "0",
+                                    color : "#a1c5e5",
+                                },
+                            ];
+                        }
                         this.settings = settings;
                         this.settings.brightness = parseInt(this.settings.brightness);
                         this.settings.media_x_position = parseInt(this.settings.media_x_position);

@@ -932,6 +932,10 @@ body.ff_full_screen {
     .el-tooltip__popper {
         z-index: 1000999 !important;
     }
+    .ff-landing-layout-box-shadow-popover {
+        z-index: 1000999 !important;
+        left: 35px !important;
+    }
     .el-color-dropdown {
         z-index: 1000999 !important;
     }
