@@ -586,10 +586,9 @@ export default {
                     }else{
                         this.$set(this.formLocations, formId, []);
                     }
-                    this.$success(res.message);
                 })
                 .fail(error => {
-                    alert(this.$t('Something is wrong! Please try again'));
+                    this.$fail(this.$t('Something went wrong, please try again.'));
                 })
                 .always(()=>{
                     this.loadingLocations = false;

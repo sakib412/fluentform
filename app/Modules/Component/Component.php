@@ -1041,8 +1041,8 @@ class Component
             ?>
             <script type="text/javascript">
                 <?php if (defined('ELEMENTOR_PRO_VERSION')): ?>
-            
-                window.addEventListener( 'elementor/popup/show', function(e) {
+
+                window.addEventListener('elementor/popup/show', function (e) {
                     var ffForms = jQuery('#elementor-popup-modal-' + e.detail.id).find('form.frm-fluent-form');
 
                     /**
