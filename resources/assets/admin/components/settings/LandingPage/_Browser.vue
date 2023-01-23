@@ -36,7 +36,7 @@
         name: 'FFBrowserFrame',
         data() {
             return {
-                device_type: 'desktop',
+                device_type: this.settings.remember_device_type,
                 loading_iframe: true,
                 frame: null
             }
@@ -178,6 +178,7 @@
             toggleDevice(val) {
                 if (this.iframe) {
                     this.iframe?.contents().scrollTop(0);
+                    this.$emit('change-device-type', this.device_type);
                 }
             },
             setFormShadow(shadows = []) {
