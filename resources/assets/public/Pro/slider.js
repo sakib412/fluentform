@@ -207,7 +207,6 @@ export default function ($, $theForm, fluentFormVars, formSelector) {
         const formSteps = $theForm.find('.fluentform-step');
         const totalSteps = formSteps.length;
         const stepTitles = $theForm.find('.ff-step-titles li');
-        const stepTitlesNavs = $theForm.find('.ff-step-titles-navs li');
 
         wrapperWidth = (100 * totalSteps) + '%';
 
