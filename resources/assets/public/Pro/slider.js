@@ -226,7 +226,7 @@ export default function ($, $theForm, fluentFormVars, formSelector) {
 
         registerStepNavigators(fluentFormVars.stepAnimationDuration);
 
-        maybeRegisterClickableStepNav(stepTitlesNavs,formSteps);
+        registerClickableStepNav(stepTitles,formSteps);
     };
 
     /**
@@ -234,7 +234,7 @@ export default function ($, $theForm, fluentFormVars, formSelector) {
      * @param  {object} stepTitlesNavs
      * @param {object} formSteps
      */
-    var maybeRegisterClickableStepNav = function (stepTitlesNavs, formSteps) {
+    var registerClickableStepNav = function (stepTitlesNavs, formSteps) {
         if (stepTitlesNavs.length === 0) {
             return;
         }
