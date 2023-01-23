@@ -144,6 +144,10 @@ class TranslationString
             'Share your form by unique URL or copy and paste the ' => __('Share your form by unique URL or copy and paste the ', 'fluentform'),
             ' to embed in your page and post' => __(' to embed in your page and post', 'fluentform'),
             'Loading Design... Please wait' => __('Loading Design... Please wait', 'fluentform'),
+            'File Upload Text' => __('File Upload Text', 'fluentform'),
+            'File Upload Size Limit Text' => __('File Upload Size Limit Text', 'fluentform'),
+            'Enter File Upload Field Size Limit text' => __('Enter File Upload Field Size Limit text', 'fluentform'),
+            'Enter File Upload Field text' => __('Enter File Upload Field text', 'fluentform'),
         );
 
         return apply_filters('fluentform/admin_i18n', $i18n);

@@ -48,6 +48,13 @@
                             :placeholder="$t('Enter key hint text shown to options')"
                         />
                     </el-form-item>
+                    <el-form-item :label="$t('File Upload Text')">
+                        <el-input
+                            v-model="meta_settings.i18n.choose_file"
+                            type="text"
+                            :placeholder="$t('Enter File Upload Field text')"
+                        />
+                    </el-form-item>
                 </el-col>
                 <el-col :span="12">
                     <el-form-item :label="$t('Confirm Button Text')">
@@ -66,12 +73,18 @@
                     <el-form-item :label="$t('Default Placeholder')">
                         <el-input v-model="meta_settings.i18n.default_placeholder" type="text" :placeholder="$t('EG: Type your answer here')" />
                     </el-form-item>
-
                     <el-form-item :label="$t('Key Hint Tooltip')">
                         <el-input 
                             v-model="meta_settings.i18n.key_hint_tooltip" 
                             type="text" 
                             :placeholder="$t('Enter Key hint tooltip')"
+                        />
+                    </el-form-item>
+                    <el-form-item :label="$t('File Upload Size Limit Text')">
+                        <el-input
+                            v-model="meta_settings.i18n.limit"
+                            type="text"
+                            :placeholder="$t('Enter File Upload Field Size Limit text')"
                         />
                     </el-form-item>
                 </el-col>
