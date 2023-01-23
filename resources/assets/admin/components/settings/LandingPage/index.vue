@@ -219,7 +219,7 @@
             </div>
             <div class="ff_landing_preview ffc_design_container">
                 <template v-if="active_tab == 'design'">
-                    <browser :settings="settings" v-if="final_share_url && show_frame" :preview_url="final_share_url" />
+                    <browser :settings="settings" v-if="final_share_url && show_frame" :preview_url="final_share_url" @change-device-type="changeDeviceType"/>
                 </template>
                 <share v-else-if="final_share_url" :share_url="final_share_url" :form_id="form_id"  />
             </div>
@@ -341,7 +341,7 @@
                             settings.custom_color = settings.color_schema;
                             settings.color_schema = 'custom';
                         }
-
+                        settings.remember_device_type = settings.remember_device_type || 'desktop';
                         if (!settings.form_shadow || !settings.form_shadow.length) {
                             settings.form_shadow = [
                                 {
@@ -407,6 +407,9 @@
                         window.localStorage.setItem('ff_landing_is_full_screen', 'no');
                     }
                 }
+            },
+            changeDeviceType (type) {
+                this.settings.remember_device_type = type;
             }
         },
         mounted() {
