@@ -147,6 +147,8 @@ With Fluent Forms, you can organize your submitted entries according to their va
 - Shortcode Field
 - Action Hook Field
 - Form Step to build multi-step form
+- Google Maps & Address autocomplete
+- Quiz Module
 - Ratings Form Field
 - Checkable Grid
 - Range Slider
@@ -154,10 +156,12 @@ With Fluent Forms, you can organize your submitted entries according to their va
 - Net Promoter Score
 - Repeat Field
 - Post/CPT selection field
+- Post Update
 - Chained Select
 - Post Creation Fields
 - Payment Field
 - Custom Payment
+- Inventory Module
 - Item Quantity
 - PayPal Payments
 - Credit Card Payments Via Stripe
@@ -257,7 +261,7 @@ Fluent Forms Documentation comes with a detailed step-by-step instruction of how
 	<li><a href="https://wpmanageninja.com/docs/fluent-form/how-to-use-wp-fluent-form/email-notification/" target="_blank">Setting up Email Notifications in Fluent Forms Plugin</a></li>
 	<li><a href="https://wpmanageninja.com/docs/fluent-form/how-to-use-wp-fluent-form/send-users-email-notification-wp-fluent-form/" target="_blank">Send Email Notifications on Form Submission</a></li>
 	<li><a href="https://wpmanageninja.com/docs/fluent-form/how-to-use-wp-fluent-form/managing-submitted-entries/" target="_blank">Managing the Submitted Entries in Fluent Forms</a></li>
-	<li><a href="https://wpmanageninja.com/docs/fluent-form/field-types/" target="_blank">Available Field Tyles in WordPress Forms</a></li>
+	<li><a href="https://wpmanageninja.com/docs/fluent-form/field-types/" target="_blank">Available Field Types in WordPress Forms</a></li>
 	<li><a href="https://wpmanageninja.com/docs/fluent-form/advanced-features-functionalities-in-wp-fluent-form/conditional-logic-fluent-form/" target="_blank">Set up Forms with Conditional Logic</a></li>
 	<li><a href="https://wpmanageninja.com/docs/fluent-form/advanced-features-functionalities-in-wp-fluent-form/form-restrictions/" target="_blank">WordPress Form Scheduling and Restriction Feature</a></li>
 	<li><a href="https://wpmanageninja.com/docs/fluent-form/integrations-availabel-in-wp-fluent-form/" target="_blank">All Available CRM and Marketing Tools Integration Modules</a></li>
