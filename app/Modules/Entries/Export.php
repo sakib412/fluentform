@@ -88,25 +88,10 @@ class Export
             $submission->response = json_decode($submission->response, true);
             $temp = [];
             foreach ($inputLabels as $field => $label) {
+                // format tabular grid data for CSV/XLSV/ODS export
                 if (isset($formInputs[$field]['element']) && "tabular_grid" === $formInputs[$field]['element']) {
                     $gridRawData = Arr::get($submission->response, $field);
-                    $content = "";
-                    if(is_array($gridRawData)){
-                        $lastKey = key(array_slice($gridRawData, -1, 1, true));
-                        foreach ($gridRawData as $row => $cols) {
-                            if (!$row || !$cols) {
-                                continue;
-                            }
-                            if (is_array($cols)) {
-                                $cols = join(', ', $cols);
-                            }
-                            $content .= $row . ': ' . $cols;
-                            if ($row != $lastKey) {
-                                $content .= " | ";
-                            }
-                        }
-                    }
-                    
+                    $content = Helper::getTabularGridFormatValue($gridRawData, Arr::get($formInputs, $field), ' | ');
                 } else {
                     $content = trim(
                         wp_strip_all_tags(
