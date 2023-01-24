@@ -168,11 +168,12 @@ class WpFormsMigrator extends BaseMigrator
         if ($formFields) {
             $formFields = $formFields['fields'];
         }
-        $submissions = wpforms()->entry->get_entries(
-            [
-                'form_id' => $form['ID'],
-            ]
-        );
+        $args = [
+            'form_id' => $form['ID'],
+        ];
+        $totalEntries = wpforms()->entry->get_entries($args, true);// 2nd parameter 'true' means return total entries count
+        $args['number'] = apply_filters('fluentform/entry_migration_max_limit', static::DEFAULT_ENTRY_MIGRATION_MAX_LIMIT, $this->key,  $totalEntries, $formId);
+        $submissions = wpforms()->entry->get_entries($args);
         $entries = [];
         if (!$submissions || !is_array($submissions)) {
             return $entries;
@@ -277,7 +278,7 @@ class WpFormsMigrator extends BaseMigrator
             'uniqElKey'       => $field['id'] . '-' . time(),
             'index'           => $field['id'],
             'required'        => ArrayHelper::isTrue($field, 'required'),
-            'label'           => $field['label'],
+            'label'           => ArrayHelper::get($field, 'label', ''),
             'name'            => ArrayHelper::get($field, 'type') . '_' . $field['id'],
             'placeholder'     => ArrayHelper::get($field, 'placeholder', ''),
             'class'           => '',

@@ -106,7 +106,7 @@ class Bootstrap
 
 
         $fluentFormId = intval(wpFluentForm('request')->get('imported_fluent_form_id'));
-        $importFormId = intval(wpFluentForm('request')->get('source_form_id'));
+        $importFormId = sanitize_text_field(wpFluentForm('request')->get('source_form_id'));
         $this->setImporterType();
         $this->importer->insertEntries($fluentFormId, $importFormId);
     }

@@ -628,7 +628,7 @@ class GravityFormsMigrator extends BaseMigrator
          * @todo need silently async processing for support all entries migrate at a time, and improve frontend entry-migrate with more settings options
          */
         $totalEntries = \GFAPI::count_entries($formId);
-        $perPage = apply_filters('fluentform_entry_migrate_max_limit_for_gravityform', 1000, $totalEntries, $formId);
+        $perPage = apply_filters('fluentform/entry_migration_max_limit', static::DEFAULT_ENTRY_MIGRATION_MAX_LIMIT, $this->key , $totalEntries, $formId);
         $offset = 0;
         $paging = [
             'offset'    => $offset,

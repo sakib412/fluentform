@@ -7,6 +7,8 @@ use FluentForm\Framework\Helpers\ArrayHelper;
 
 abstract class BaseMigrator
 {
+    /** Constants used for default entry migrations max limit */
+    const  DEFAULT_ENTRY_MIGRATION_MAX_LIMIT = 1000;
     public $key;
     public $title;
     public $shortcode;
