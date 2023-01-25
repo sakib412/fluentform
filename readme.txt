@@ -155,6 +155,7 @@ With Fluent Forms, you can organize your submitted entries according to their va
 - Color Picker
 - Net Promoter Score
 - Repeat Field
+- Save and Resume
 - Post/CPT selection field
 - Post Update
 - Chained Select
@@ -378,21 +379,7 @@ The entire source code is <a href="https://github.com/fluentform/fluentform">ava
 
 == Changelog ==
 
-= 4.3.22 (Date: November 11, 2022) =
-- Adds Conversational form to Regular form converter
-- Fixes conditional field for EU number style
-- Fixes rating field for conditional
-- Fixes file upload preview
-
-= 4.3.21 (Date: October 27, 2022) =
-- Adds Ninja Forms entry migrator
-- Adds Gravity Forms entry migrator
-- Adds Birthday field support on Mailchimp
-- Improves Sanitization
-- Improves Conversational Forms responsiveness
-- Improves UX
-
-= 4.3.23 (Date: January 25, 2023)
+= 4.3.23 (Date: January 25, 2023) =
  - Adds WPForms Form & Entry Migrator
  - Improves Form Accessibility
  - Adds Form shortcode page finder
@@ -411,6 +398,20 @@ The entire source code is <a href="https://github.com/fluentform/fluentform">ava
  - Fixes Conditional Logic Enabled Icon on Conversational Form Fields
  - Fixes Payment Quantity Field issue on Conversational Form Editor
  - Fixes Error Message instant Trigger For Numeric Field on Conversational Form
+
+= 4.3.22 (Date: November 11, 2022) =
+- Adds Conversational form to Regular form converter
+- Fixes conditional field for EU number style
+- Fixes rating field for conditional
+- Fixes file upload preview
+
+= 4.3.21 (Date: October 27, 2022) =
+- Adds Ninja Forms entry migrator
+- Adds Gravity Forms entry migrator
+- Adds Birthday field support on Mailchimp
+- Improves Sanitization
+- Improves Conversational Forms responsiveness
+- Improves UX
 
 = 4.3.20 (Date: October 22, 2022) =
 - Fixes Date / Time field config bug
