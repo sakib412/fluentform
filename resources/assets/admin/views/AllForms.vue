@@ -177,7 +177,7 @@
                                             {{$t('Found in')}}
                                             <ul class="ff_inline_list">
                                                 <li v-for="location in formLocations[scope.row.id] " >
-                                                    <a :href="location.edit_link">
+                                                    <a target="_blank" :href="location.edit_link">
                                                         <code class="item ">{{location.title}}</code>
                                                     </a>
                                                 </li>
