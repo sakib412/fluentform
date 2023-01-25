@@ -1,6 +1,6 @@
 === Contact Form Plugin - Fastest Contact Form Builder Plugin for WordPress by Fluent Forms ===
 Contributors: techjewel,adreastrian,heera,wpmanageninja
-Tags: contact form, contact forms, wp forms, forms, form builder, contact form builder, fluent forms
+Tags: contact form, quiz, wp forms, forms, form builder, contact form builder, fluent forms, custom form, order form, contact forms
 Requires at least: 4.5
 Tested up to: 6.1
 Requires PHP: 5.6
@@ -53,7 +53,7 @@ What a good contact form builder plugin is if the users can’t use it with ease
 
 And not only that, this form builder is so easy to use, even a complete beginner will be able to create and publish forms in less than 5 minutes! You can easily replace Contact Form 7 with Fluent Forms, since you'll get more advanced features in an easy interface.
 
-As responsiveness is a must for any online tool these days, Fluent Forms is developed as a 100% mobile responsive contact form builder, so that your forms look great on all kinds of devices (mobiles, tablets, laptops, and desktops).
+As responsiveness is a must for any online tool these days, Fluent Forms is developed as a 100% mobile responsive contact form builder, so that your forms look great on all kinds of devices (mobiles, tablets, laptops, and desktops). Moreover, this form builder is also fit with accessiblity, which is a great option for people with disability.
 
 Here goes a list of all the Premium features you will be enjoying in Fluent Forms:
 
@@ -78,7 +78,7 @@ Fluent Forms is an extremely feature-rich plugin that delivers a beautiful and b
 Fluent Forms can be used for your regular contact forms, event forms, online forms and any data collection form. You can connect the form data with many 3rd party CRM without writing a single line of code. And the Best thing is this is entirely free, and it always is free and opensource.
 
 == DRAG & DROP CONTACT FORM BUILDER ==
-Our powerful drag & drop form builder allows you to easily create WordPress contact forms and other online forms in just a few minutes without writing any code. Building forms is now easier for you than writing and drawing it on a piece of paper!
+Our powerful drag & drop form builder allows you to easily create WordPress contact forms and other online forms in just a few minutes without writing any code. Building forms is now easier for you than writing and drawing it on a piece of paper! Not only that, you can easily migrate from other from builder using our migrator that supports Gravity Forms, WPForms, and Ninja Forms.
 
 == MULTI-COLUMN FORM LAYOUT ==
 We have all faced the hassle of long forms, filling out which seems like meeting a Dementor from the Harry Potter series that might suck the soul out of you and leave you dead. These “long” forms are often nothing more than just mismanagement of space. Say, you are showing your potential lead a form that has ten input fields in it. Now stacking these 10 fields one after one makes it a long, tedious, and scary form. But if you cleverly stack them 2 or 3 columns, the whole thing looks compact, smart, and not that much scary at all!
@@ -172,6 +172,9 @@ With Fluent Forms, you can organize your submitted entries according to their va
 **Advanced Form Styler (Pro)**
 Advanced form styler is our most amazing feature of 2019 and we are so much excited about it and I am sure our users will love it. Using this styler, you can easily style every element of a form.
 We also added four pre-defined styles template that you can just select and pre-defined css will be added applied realtime. If you choose custom design then the styler will show the style elements based on your form's available styles and you and you can design the form elements fro the style controls.
+
+**Build Quizzes Easily (Pro)**
+Fluent Forms Pro comes with a brilliant option for making quizzes. Now you can engage more users with enticing quizzes built with Fluent Forms inside yor WordPress dashboard. The quiz builder alllows you to create a survey quiz, fun quiz, personality quiz, trivia quiz, and more. You can assign scores to each question and let people know how they perform via instant or email notifications.
 
 **Create PDF from Form Submission**
 Now, You can generate PDF from your templates and download or attach the PDF via email. This feature is completely free.
