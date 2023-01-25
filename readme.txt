@@ -392,6 +392,26 @@ The entire source code is <a href="https://github.com/fluentform/fluentform">ava
 - Improves Conversational Forms responsiveness
 - Improves UX
 
+= 4.3.23 (Date: January 25, 2023)
+ - Adds WPForms Form & Entry Migrator
+ - Improves Form Accessibility
+ - Adds Form shortcode page finder
+ - Fixes Mp3 File issue in Conversational Form
+ - Fixes Oxygen Builder Popup Form
+ - Fixes Elementor v3.9.1 popup issue
+ - Fixes Migration Issue of Gravity Form
+ - Fixes Numeric Field US format Negative value
+ - Fixes URL validation for Conversational Form
+ - Fixes Asterisk Position for Conversational Forms
+ - Fixes Conditional Shortcode contains ‘&’ character
+ - Fixes Conversational Form Duplicated Form’s Design Issue
+ - Fixes Conditional Logic Empty Ruleset for Conversational Form
+ - Fixes Text Input field’s Max Text Length for Conversational Form
+ - Fixes Conditional Logic with Calculation for Conversational Form
+ - Fixes Conditional Logic Enabled Icon on Conversational Form Fields
+ - Fixes Payment Quantity Field issue on Conversational Form Editor
+ - Fixes Error Message instant Trigger For Numeric Field on Conversational Form
+
 = 4.3.20 (Date: October 22, 2022) =
 - Fixes Date / Time field config bug
 
