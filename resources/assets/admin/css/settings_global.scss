@@ -710,6 +710,34 @@ table.ff_routing_table tr {
     }
 }
 
+.ff_type_settings {
+    width: 100%;
+    .ff-type-control {
+        margin-bottom: 10px;
+        margin-bottom: 10px;
+        overflow: hidden;
+        display: block;
+
+        .ff-control-title, .ff-type-value {
+            display: inline-block;
+            color: #808184;
+            font-size: 12px;
+        }
+
+        .ff-type-value {
+            float: right;
+        }
+
+        &.ff-type-full {
+            width: 100%;
+
+            .ff-type-value {
+                width: 100%;
+                float: none;
+            }
+        }
+    }
+}
 
 ul.fcc_inline_social {
     margin: 20px 0;
@@ -976,3 +1004,4 @@ body.ff_full_screen {
         }
     }
 }
+

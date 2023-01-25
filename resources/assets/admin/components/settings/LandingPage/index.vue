@@ -81,24 +81,13 @@
                             <el-color-picker @active-change="(color) => { settings.custom_color = color; }" v-model="settings.custom_color"></el-color-picker>
                         </el-form-item>
 
-                        <el-form-item>
-                            <template slot="label">
-                                {{ $t('Shadow') }}
-                                <el-tooltip class="item" placement="bottom-start" effect="light">
-                                    <div slot="content">
-                                        <h3>{{ $t('Form Container Shadow') }}</h3>
-                                        <p>
-                                            {{ $t('Choose Shadow for your form container') }}
-                                        </p>
-                                    </div>
-                                    <i class="el-icon-info el-text-info"></i>
-                                </el-tooltip>
-                            </template>
-                            <template  v-for="(item,i) in settings.form_shadow">
-                                <ff_boxshadow  :valueItem="item" />
-                            </template>
 
-                        </el-form-item>
+                        <div v-for="(item,i) in settings.form_shadow">
+
+                            <ff_boxshadow :valueItem="item"/>
+
+                        </div>
+
 
                         <el-form-item>
                             <template slot="label">
@@ -342,9 +331,11 @@
                             settings.color_schema = 'custom';
                         }
                         settings.remember_device_type = settings.remember_device_type || 'desktop';
+
                         if (!settings.form_shadow || !settings.form_shadow.length) {
                             settings.form_shadow = [
                                 {
+                                    label : this.$t('Outer Shadow'),
                                     position: "",
                                     horizontal: "0",
                                     vertical: "30",
@@ -353,6 +344,7 @@
                                     color :"rgb(0 0 0 / 25%)"
                                 },
                                 {
+                                    label : this.$t('Inner Shadow'),
                                     position: "inset",
                                     horizontal: "0",
                                     vertical: "4",
