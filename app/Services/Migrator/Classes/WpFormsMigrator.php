@@ -160,6 +160,11 @@ class WpFormsMigrator extends BaseMigrator
 
     public function getEntries($formId)
     {
+        if(!wpforms()->is_pro()){
+            wp_send_json([
+                'message' => __("Entries not available in WPForms Lite",'fluentform')
+            ], 200);
+        }
         $form = $this->getForm($formId);
         if (empty($form)) {
             return false;
