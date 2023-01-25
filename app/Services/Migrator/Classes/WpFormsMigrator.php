@@ -12,7 +12,7 @@ class WpFormsMigrator extends BaseMigrator
     public function __construct()
     {
         $this->key = 'wpforms';
-        $this->title = 'WP Forms';
+        $this->title = 'WPForms';
         $this->shortcode = 'wp_form';
         $this->hasStep = false;
     }
