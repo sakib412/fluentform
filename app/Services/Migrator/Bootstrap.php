@@ -43,7 +43,7 @@ class Bootstrap
         }
         if ((new WpFormsMigrator())->exist()) {
             $migratorLinks[] = [
-                'name' => 'WP Forms',
+                'name' => 'WPForms',
                 'key'  => 'wpforms',
             ];
         }
