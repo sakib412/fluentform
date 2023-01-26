@@ -82,23 +82,27 @@ import formSlider from "./Pro/slider";
                         $linkDom.find('input').val(data.data.saved_url);
                         return;
                     }
-
-                    if ($(savingResponseMsg).length) {
-                        $(savingResponseMsg).slideUp('fast');
+                    if (data.data?.message != '') {
+                        if ($(savingResponseMsg).length) {
+                            $(savingResponseMsg).slideUp('fast');
+                        }
+                        $('<div/>', {
+                            'id': saveProgressMessage,
+                            'class': 'ff-message-success ff-el-group'
+                        })
+                            .html(data.data.message)
+                            .insertBefore($saveBttn.closest('.ff-el-group'));
                     }
-                    $('<div/>', {
-                        'id': saveProgressMessage,
-                        'class': 'ff-message-success ff-el-group'
-                    })
-                        .html(data.data.message)
-                        .insertBefore($saveBttn.closest('.ff-el-group'));
+
+
 
 
                     //Show Link in Input
+                    const copyIcon = window.form_state_save_vars.copy_button || 'Copy';
                     let inputDiv = `<div class="ff-el-input--content"><div class="ff_input-group"><input readonly value="${ data.data.saved_url }" class="ff-el-form-control" >
                     <div class="ff_input-group-append">
                     <button class="ff-btn ff-btn-md ff_btn_style ff_btn_copy_link ff_input-group-text">
-                        ${window.form_state_save_vars.copy_button}
+                        ${copyIcon}
                     </button></div></div></div>`;
                     let inputGroup = $('<div/>', { class: 'ff-el-group ff-saved-state-input ff-saved-state-link ff-hide-group', html: inputDiv });
 
@@ -108,11 +112,12 @@ import formSlider from "./Pro/slider";
                     inputGroup.fadeIn();
 
                     //Show Email Input
+                    const emailIcon = window.form_state_save_vars.email_button || 'Email';
                     if ($(this).hasClass('ff_resume_email_enabled')) {
                         let emailDiv = `<div class="ff-el-input--content"><div class="ff_input-group"><input type="email" class="ff-el-form-control" placeholder="Your Email Here" class="ff-el-form-control">
                         <div class="ff_input-group-append">
                         <button class="ff-btn ff-btn-md ff_btn_style ff_btn_is_email ff_input-group-text">
-                             ${window.form_state_save_vars.email_button}
+                             ${emailIcon}
                         </button></div></div></div>`;
                         let emailGroup = $('<div/>', { class: 'ff-el-group ff-saved-state-input  ff-email-address ff-hide-group', html: emailDiv });
 
@@ -145,7 +150,8 @@ import formSlider from "./Pro/slider";
             e.preventDefault();
             let copiedText = $(this).closest('.ff-el-input--content').find('.ff-el-form-control').val();
             navigator.clipboard.writeText(copiedText);
-            $(this).html(`${window.form_state_save_vars.copy_success_button}`);
+            const copySuccess = window.form_state_save_vars.copy_success_button || 'Copied';
+            $(this).html(`${copySuccess}`);
         });
 
         $(formSelector).on('click', '.ff_btn_is_email', function (e) {
