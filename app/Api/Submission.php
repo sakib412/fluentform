@@ -21,7 +21,7 @@ class Submission
         $offset = $args['per_page'] * ($args['page'] - 1);
 
         $entryQuery = wpFluent()->table('fluentform_submissions')
-            ->orderBy('id', $args['sort_type'])
+            ->orderBy('id', \FluentForm\App\Helpers\Helper::sanitizeOrderValue($args['sort_type']))
             ->limit($args['per_page'])
             ->offset($offset);
 

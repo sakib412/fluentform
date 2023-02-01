@@ -624,6 +624,13 @@ class Helper
 
         return $content;
     }
+    
+    public static function sanitizeOrderValue($orderType = '')
+    {
+        $orderBys = ['ASC', 'DESC'];
+        $orderType = trim(strtoupper($orderType));
+        return isset($orderBys[$orderType]) ? $orderType : 'DESC';
+    }
 
     public static function getForm($id)
     {

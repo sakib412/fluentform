@@ -35,7 +35,7 @@ class Entry
 
         $entryQuery = wpFluent()->table('fluentform_submissions')
                         ->where('form_id', $this->form->id)
-                        ->orderBy('id', $atts['sort_type'])
+                        ->orderBy('id', \FluentForm\App\Helpers\Helper::sanitizeOrderValue($atts['sort_type']))
                         ->limit($atts['per_page'])
                         ->offset($offset);
 
