@@ -628,8 +628,10 @@ class Helper
     public static function sanitizeOrderValue($orderType = '')
     {
         $orderBys = ['ASC', 'DESC'];
+        
         $orderType = trim(strtoupper($orderType));
-        return isset($orderBys[$orderType]) ? $orderType : 'DESC';
+        
+        return in_array($orderType, $orderBys) ? $orderType : 'DESC';
     }
 
     public static function getForm($id)
