@@ -66,18 +66,17 @@ class AdminBar
         } else {
             $title = __('Fluent Forms', 'fluentform');
         }
-        
+    
         $hasUnreadSubmissions = wpFluent()->table('fluentform_submissions')
             ->where('status', 'unread')
             ->count();
         $entriesDropdownTitle = __('Entries', 'fluentform');
         if ($hasUnreadSubmissions > 0) {
             $style = "background: #ca4a20;color: white;border-radius: 8px;padding: 1px 7px; height: 16px; display: inline-flex; align-items: center;";
-            //main nav title
-            $title .= ' <span class="ff_unread_count" style="'. $style . '">' . $hasUnreadSubmissions . '</span>';
+            $title .= ' <span class="ff_unread_count" style="' . $style . '">' . $hasUnreadSubmissions . '</span>';
             // for dropdown title
             $style .= 'float:right; margin-top:4px';
-            $entriesDropdownTitle .= ' <span class="ff_unread_count" style="'. $style . '">' . $hasUnreadSubmissions . '</span>';
+            $entriesDropdownTitle .= ' <span class="ff_unread_count" style="' . $style . '">' . $hasUnreadSubmissions . '</span>';
         }
         
         $items = [
@@ -114,25 +113,9 @@ class AdminBar
                     'url'        => 'admin.php?page=fluent_forms_payment_entries'
                 ];
             }
-            
-            $items['fluent_forms_add_ons'] = [
-                'title'      => __('Integrations', 'fluentform'),
-                'capability' => $fromRole ? $settingsCapability : 'fluentform_entries_viewer',
-                'url'        => 'admin.php?page=fluent_forms_add_ons',
-            ];
-            $items['fluent_forms_settings'] = [
-                'title'      => __('Global Settings', 'fluentform'),
-                'capability' => $fromRole ? $settingsCapability : 'fluentform_forms_manager',
-                'url'        => 'admin.php?page=fluent_forms_settings',
-            ];
+         
         }
-        
-        $items ['fluent_forms_docs'] = [
-            'title'      => __('Get Help', 'fluentform'),
-            'capability' => $dashBoardCapability,
-            'url'        => 'admin.php?page=fluent_forms_docs'
-        
-        ];
+       
         
         return apply_filters('fluentform_admin_menu_bar_items', $items);
     }
