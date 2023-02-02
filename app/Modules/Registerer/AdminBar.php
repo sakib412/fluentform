@@ -70,14 +70,14 @@ class AdminBar
         $hasUnreadSubmissions = wpFluent()->table('fluentform_submissions')
             ->where('status', 'unread')
             ->count();
-        
+        $unreadCount = '';
         if ($hasUnreadSubmissions > 0) {
-            $title .= ' <span class="ff_unread_count" style="background: #ca4a20;color: white;border-radius: 8px;padding: 1px 8px;">' . $hasUnreadSubmissions . '</span>';
+            $unreadCount = ' <span class="ff_unread_count" style="background: #ca4a20;color: white;border-radius: 8px;padding: 1px 8px;">' . $hasUnreadSubmissions . '</span>';
         }
         
         $items = [
             'fluent_form' => [
-                'title'      => $title,
+                'title'      => $title.$unreadCount,
                 'capability' => $currentUserCapability,
                 'url'        => 'admin.php?page=fluent_forms'
             ],
@@ -96,9 +96,8 @@ class AdminBar
 //                'url'        => 'admin.php?page=fluent_forms#add=1',
 //            ];
             
-            $highlightIcon = $hasUnreadSubmissions > 0 ? '<span class="ff_unread_coun_notify" style="background: #ca4a20;border-radius: 50%;height: 5px;float: right;width: 5px;margin-top: 10px;"></span>' : '';
             $items['fluent_forms_all_entries'] = [
-                'title'      => __('Entries', 'fluentform').$highlightIcon,
+                'title'      => __('Entries', 'fluentform').$unreadCount,
                 'capability' => $fromRole ? $settingsCapability : 'fluentform_entries_viewer',
                 'url'        => 'admin.php?page=fluent_forms_all_entries',
             ];
