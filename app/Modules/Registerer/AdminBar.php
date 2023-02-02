@@ -70,14 +70,19 @@ class AdminBar
         $hasUnreadSubmissions = wpFluent()->table('fluentform_submissions')
             ->where('status', 'unread')
             ->count();
-        $unreadCount = '';
+        $entriesDropdownTitle = __('Entries', 'fluentform');
         if ($hasUnreadSubmissions > 0) {
-            $unreadCount = ' <span class="ff_unread_count" style="background: #ca4a20;color: white;border-radius: 8px;padding: 1px 8px;">' . $hasUnreadSubmissions . '</span>';
+            $style = "background: #ca4a20;color: white;border-radius: 8px;padding: 1px 7px; height: 16px; display: inline-flex; align-items: center;";
+            //main nav title
+            $title .= ' <span class="ff_unread_count" style="'. $style . '">' . $hasUnreadSubmissions . '</span>';
+            // for dropdown title
+            $style .= 'float:right; margin-top:4px';
+            $entriesDropdownTitle .= ' <span class="ff_unread_count" style="'. $style . '">' . $hasUnreadSubmissions . '</span>';
         }
         
         $items = [
             'fluent_form' => [
-                'title'      => $title.$unreadCount,
+                'title'      => $title,
                 'capability' => $currentUserCapability,
                 'url'        => 'admin.php?page=fluent_forms'
             ],
@@ -97,7 +102,7 @@ class AdminBar
 //            ];
             
             $items['fluent_forms_all_entries'] = [
-                'title'      => __('Entries', 'fluentform').$unreadCount,
+                'title'      => $entriesDropdownTitle,
                 'capability' => $fromRole ? $settingsCapability : 'fluentform_entries_viewer',
                 'url'        => 'admin.php?page=fluent_forms_all_entries',
             ];
