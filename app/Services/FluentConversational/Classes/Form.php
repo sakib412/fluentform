@@ -198,7 +198,7 @@ class Form
                 'default_placeholder'  => 'Type Your answer here',
                 'key_hint_text'        => 'Key',
                 'key_hint_tooltip'     => 'Press the key to select',
-                'choose_file'          => 'Choose File or Drag Here',
+                'choose_file'          => '<b>Choose file</b> or <b>drag here</b>',
                 'limit'                => 'Size limit: '
             ],
         ];

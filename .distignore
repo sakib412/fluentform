@@ -17,3 +17,9 @@ resources/img
 guten_block/
 public/js/*.css
 .prettierrc
+
+# ignore latest framework things
+/assets
+app/Http
+app/Views
+/vendor

@@ -4,7 +4,7 @@ Tags: contact form, quiz, wp forms, forms, form builder, contact form builder, f
 Requires at least: 4.5
 Tested up to: 6.1
 Requires PHP: 5.6
-Stable tag: 4.3.22
+Stable tag: 4.3.23
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -307,13 +307,16 @@ Fluent Forms Documentation comes with a detailed step-by-step instruction of how
 Already using a form plugin? If you are looking forward to switching to Fluent Forms, but already using Caldera Forms, Ninja Forms or Gravity Forms; we will make the switch easy for you. Now Fluent Forms comes packed with a one-click migrator. With this migrator, you can import all of your forms made with Caldera along with the customizations, configuration, and form entries! For Ninja Forms, and Gravity Forms the migrator will only import your forms and form settings, but not the form entries.
 
 == Migrating From Gravity Forms ==
-If you have forms in Gravity Forms then you can migrate Forms build with Gravity Forms easily. In this case just go to the Fluent Forms -> Tools -> Migrator and you will find a section for Gravity Forms. You can see all the Gravity Forms and then click the Migrate button to migrate the form as well as the entries will be migrated. Please note that, Entries of your Gravity Forms will not be migrated.
+If you have forms in Gravity Forms then you can migrate forms built with Gravity Forms easily. In this case just go to the Fluent Forms -> Tools -> Migrator and you will find a section for Gravity Forms. You can see all the Gravity Forms and then click the Import Form button to migrate the form. To import the entries as well click the Import Entries button.
 
 == Migrating From Ninja Forms ==
-If you have forms in Ninja Forms then you can migrate Forms build with Ninja Forms easily. In this case just go to the Fluent Forms -> Tools -> Migrator and you will find a section for Ninja Forms. You can see all the Ninja Forms and then click the Migrate button to migrate the form as well as the entries will be migrated. Please note that, Entries of your Ninja Forms will not be migrated.
+If you have forms in Ninja Forms then you can migrate forms built with Ninja Forms easily. In this case just go to the Fluent Forms -> Tools -> Migrator and you will find a section for Ninja Forms. You can see all the Ninja Forms and then click the Import Form button to migrate the form. To import the entries as well click the Import Entries button.
 
 == Migrating From Caldera Forms ==
-If you have forms in Caldera Forms then you can migrate Forms build with Caldera Forms easily. In this case just go to the Fluent Forms -> Tools -> Migrator and you will find a section for Caldera Forms. You can see all the Caldera Forms and then click the Migrate button to migrate the form as well as the entries will be migrated. Your Entries from Caldera Forms will be also migrated.
+If you have forms in Caldera Forms then you can migrate forms built with Caldera Forms easily. In this case just go to the Fluent Forms -> Tools -> Migrator and you will find a section for Caldera Forms. You can see all the Caldera Forms and then click the Import Form button to migrate the form. To import the entries as well click the Import Entries button.
+
+== Migrating From WPForms ==
+If you have forms in WPForms then you can migrate forms built with WP Forms easily. In this case just go to the Fluent Forms -> Tools -> Migrator and you will find a section for WPForms. You can see all the WPForms and then click the Import Form button to migrate the form. To import the entries as well click the Import Entries button.
 
 
 == Other Plugins By WPManageNinja Team ==
@@ -382,10 +385,10 @@ The entire source code is <a href="https://github.com/fluentform/fluentform">ava
 
 == Changelog ==
 
-= 4.3.23 (Date: January 25, 2023) =
+= 4.3.23 (Date: February 02, 2023) =
  - Adds WPForms Form & Entry Migrator
- - Improves Form Accessibility
  - Adds Form shortcode page finder
+ - Improves Form Accessibility
  - Fixes Mp3 File issue in Conversational Form
  - Fixes Oxygen Builder Popup Form
  - Fixes Elementor v3.9.1 popup issue
