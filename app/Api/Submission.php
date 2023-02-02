@@ -25,7 +25,7 @@ class Submission
             ->limit($args['per_page'])
             ->offset($offset);
 
-        $type = $args['entry_type'];
+        $type = sanitize_text_field($args['entry_type']);
 
         if ($type && 'all' != $type) {
             $entryQuery->where('status', $type);
@@ -35,7 +35,7 @@ class Submission
             $entryQuery->whereIn('form_id', $args['form_ids']);
         }
 
-        if ($searchString = $args['search']) {
+        if ($searchString = sanitize_text_field($args['search'])) {
             $entryQuery->where(function ($q) use ($searchString) {
                 $q->where('id', 'LIKE', "%{$searchString}%")
                     ->orWhere('response', 'LIKE', "%{$searchString}%")

@@ -45,7 +45,7 @@ class Entry
             $entryQuery->where('status', $type);
         }
 
-        if ($searchString = $atts['search']) {
+        if ($searchString = sanitize_text_field($atts['search'])) {
             $entryQuery->where(function ($q) use ($searchString) {
                 $q->where('id', 'LIKE', "%{$searchString}%")
                     ->orWhere('response', 'LIKE', "%{$searchString}%")

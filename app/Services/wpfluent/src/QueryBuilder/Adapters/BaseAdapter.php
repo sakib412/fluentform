@@ -65,8 +65,8 @@ abstract class BaseAdapter
         }
 
         // Limit and offset
-        $limit = isset($statements['limit']) ? 'LIMIT ' . $statements['limit'] : '';
-        $offset = isset($statements['offset']) ? 'OFFSET ' . $statements['offset'] : '';
+        $limit = isset($statements['limit']) ? 'LIMIT ' . intval($statements['limit']) : '';
+        $offset = isset($statements['offset']) ? 'OFFSET ' . intval($statements['offset']) : '';
 
         // Having
         list($havingCriteria, $havingBindings) = $this->buildCriteriaWithType($statements, 'havings', 'HAVING');

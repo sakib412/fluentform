@@ -34,12 +34,12 @@ class Entries extends EntryQuery
     {
         $formId = intval($this->request->get('form_id'));
 
-        $limit = $this->request->get('per_page', 10);
-        $page = $this->request->get('page', 1);
+        $limit = intval($this->request->get('per_page', 10));
+        $page = intval($this->request->get('page', 1));
         $offset = ($page - 1) * $limit;
 
-        $search = $this->request->get('search');
-        $status = $this->request->get('entry_status');
+        $search = sanitize_text_field($this->request->get('search'));
+        $status = sanitize_text_field($this->request->get('entry_status'));
 
         $query = wpFluent()->table('fluentform_submissions')
             ->select([
