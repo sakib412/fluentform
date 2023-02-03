@@ -237,10 +237,11 @@ class BaseComponent
             $label = ArrayHelper::get($data, 'settings.label');
 
             $labelMarkup = sprintf(
-                '<div class="%s"><label %s aria-label="%3$s">%s</label> %s</div>',
+                '<div class="%s"><label %s aria-label="%s">%s</label> %s</div>',
                 esc_attr($labelClass),
                 $forStr,
                 wp_strip_all_tags($label),
+                fluentform_sanitize_html($label),
                 fluentform_sanitize_html($labelHelpText)
             );
         }
