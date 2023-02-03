@@ -101,12 +101,11 @@ class AdminBar
         ];
         
         if ($settingsCapability) {
-//      todo add new form from link admin nav
-//            $items['new_form'] = [
-//                'title'      => __('New Form', 'fluentform'),
-//                'capability' => $fromRole ? $settingsCapability : 'fluentform_forms_manager',
-//                'url'        => 'admin.php?page=fluent_forms#add=1',
-//            ];
+            $items['new_form'] = [
+                'title'      => __('New Form', 'fluentform'),
+                'capability' => $fromRole ? $settingsCapability : 'fluentform_forms_manager',
+                'url'        => 'admin.php?page=fluent_forms#add=1',
+            ];
             
             $items['fluent_forms_all_entries'] = [
                 'title'      => $entriesDropdownTitle,
