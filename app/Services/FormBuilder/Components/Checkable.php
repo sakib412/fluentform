@@ -100,9 +100,10 @@ class Checkable extends BaseComponent
             $id = esc_attr($id);
 
             $label = fluentform_sanitize_html($option['label']);
+            $ariaLabel = wp_strip_all_tags($label);
             // Here we can push the visual items
             if ($hasImageOption) {
-                $elMarkup .= "<label style='background-image: url(" . esc_url($option['image']) . ")' class='ff-el-image-input-src' for='{$id}' aria-label='{$label}'></label>";
+                $elMarkup .= "<label style='background-image: url(" . esc_url($option['image']) . ")' class='ff-el-image-input-src' for='{$id}' aria-label='{$ariaLabel}'></label>";
             }
 
             $ariaRequired = 'false';
@@ -110,7 +111,7 @@ class Checkable extends BaseComponent
                 $ariaRequired = 'true';
             }
 
-            $elMarkup .= "<label class='ff-el-form-check-label' for={$id}><input {$atts} id='{$id}' aria-label='{$label}' aria-invalid='false' aria-required={$ariaRequired}> <span>" . $label . '</span></label>';
+            $elMarkup .= "<label class='ff-el-form-check-label' for={$id}><input {$atts} id='{$id}' aria-label='{$ariaLabel}' aria-invalid='false' aria-required={$ariaRequired}> <span>" . $label . '</span></label>';
             $elMarkup .= '</div>';
         }
 
