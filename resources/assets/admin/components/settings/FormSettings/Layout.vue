@@ -522,9 +522,22 @@
                        </el-radio-group>
                    </div>
                 </el-form-item>
-
-
-
+                <!-- Toggle Admin Top Navigation -->
+                <el-form-item>
+                    <template slot="label">
+                        {{ $t('Admin Top Navigation') }}
+                        <el-tooltip class="item" placement="bottom-start" effect="light">
+                            <div slot="content">
+                                <h3>{{ $t('Admin Top Navigation') }}</h3>
+                                <p>
+                                    {{$t('Toggle Admin Top Navigation on or off') }}
+                                </p>
+                            </div>
+                            <i class="el-icon-info el-text-info"></i>
+                        </el-tooltip>
+                    </template>
+                    <el-switch active-color="#13ce66" active-value="yes" inactive-value="no" v-model="misc.admin_top_nav_status"></el-switch>
+                </el-form-item>
 
             </el-col>
         </el-row>
@@ -605,6 +618,9 @@
             }
             if(!this.data.misc.file_upload_locations) {
                 this.$set(this.data.misc, 'file_upload_locations', 'default');
+            }
+            if(!this.data.misc.admin_top_nav_status) {
+                this.$set(this.data.misc, 'admin_top_nav_status', 'yes');
             }
 
             this.misc = this.data.misc;

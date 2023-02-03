@@ -10,7 +10,15 @@ class AdminBar
     
     public function register()
     {
-        add_action('admin_bar_menu', [$this, 'addMenuBar'], 99);
+        if (!self::isDisabled()) {
+            add_action('admin_bar_menu', [$this, 'addMenuBar'], 99);
+        }
+    }
+    
+    public static function isDisabled()
+    {
+        $settings = get_option('_fluentform_global_form_settings');
+        return $settings && 'no' == ArrayHelper::get($settings, 'misc.admin_top_nav_status');
     }
     
     public function addMenuBar($wpAdminBar)
