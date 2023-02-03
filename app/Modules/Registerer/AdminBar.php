@@ -80,7 +80,7 @@ class AdminBar
             ->count();
         $entriesDropdownTitle = __('Entries', 'fluentform');
         if ($hasUnreadSubmissions > 0) {
-            $style = "background: #ca4a20;color: white;border-radius: 8px;padding: 1px 7px; height: 16px; display: inline-flex; align-items: center;";
+            $style = "background: #3f9eff;color: white;border-radius: 8px;padding: 1px 7px; height: 16px; display: inline-flex; align-items: center;";
             $title .= ' <span class="ff_unread_count" style="' . $style . '">' . $hasUnreadSubmissions . '</span>';
             // for dropdown title
             $style .= 'float:right; margin-top:4px';
