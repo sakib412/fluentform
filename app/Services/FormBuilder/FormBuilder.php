@@ -111,7 +111,7 @@ class FormBuilder
         $isAccessible = apply_filters('fluentform_disable_accessibility_fieldset', true, $form);
 
         if ($isAccessible) {
-           echo '<fieldset><legend class="ff_screen_reader">'.$form->title.'</legend>';
+            echo $this->fieldsetHtml($form);
         }
 
         do_action('fluentform_form_element_start', $form);
@@ -388,5 +388,25 @@ class FormBuilder
             }
         }
         return $atts;
+    }
+    
+    /**
+     * Get hidden fieldset html
+     *
+     * @param $form
+     *
+     * @return string
+     */
+    private function fieldsetHtml($form)
+    {
+        return '<fieldset style="border: none!important;
+                                 margin: 0!important;
+                                 padding: 0!important;
+                                 background-color: transparent!important;
+                                 box-shadow: none!important;
+                                 outline: none!important;">
+                    <legend class="ff_screen_reader_title" style="margin: 0!important;padding: 0!important;height: 0!important;text-indent: -999999px;width: 0!important;">'
+                            .$form->title.
+                    '</legend>';
     }
 }
