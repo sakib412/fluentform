@@ -100,7 +100,7 @@ class Checkable extends BaseComponent
             $id = esc_attr($id);
 
             $label = fluentform_sanitize_html($option['label']);
-            $ariaLabel = wp_strip_all_tags($label);
+            $ariaLabel = esc_attr($label);
             // Here we can push the visual items
             if ($hasImageOption) {
                 $elMarkup .= "<label style='background-image: url(" . esc_url($option['image']) . ")' class='ff-el-image-input-src' for='{$id}' aria-label='{$ariaLabel}'></label>";

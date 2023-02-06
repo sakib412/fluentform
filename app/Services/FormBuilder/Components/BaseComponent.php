@@ -176,7 +176,7 @@ class BaseComponent
         $requiredClass = $this->getRequiredClass(ArrayHelper::get($data, 'settings.validation_rules', []));
         $classes = trim('ff-el-input--label ' . $requiredClass . $this->getAsteriskPlacement($form));
 
-        return "<div class='" . esc_attr($classes) . "'><label aria-label='" . wp_strip_all_tags($label) . "' for='" . esc_attr($id) . "'>" . fluentform_sanitize_html($label) . '</label>' . $helpMessage . '</div>';
+        return "<div class='" . esc_attr($classes) . "'><label aria-label='" . esc_attr($label) . "' for='" . esc_attr($id) . "'>" . fluentform_sanitize_html($label) . '</label>' . $helpMessage . '</div>';
     }
 
     /**
@@ -240,7 +240,7 @@ class BaseComponent
                 '<div class="%s"><label %s aria-label="%s">%s</label> %s</div>',
                 esc_attr($labelClass),
                 $forStr,
-                wp_strip_all_tags($label),
+                esc_attr($label),
                 fluentform_sanitize_html($label),
                 fluentform_sanitize_html($labelHelpText)
             );

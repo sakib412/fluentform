@@ -777,7 +777,7 @@ class Form
                 $postType = get_post_type_object($post->post_type);
                 $formLocations[] = [
                     'id'        => $post->ID,
-                    'name' => $postType->labels->singular_name,
+                    'name'      => $postType->labels->singular_name,
                     'title'     => (empty($post->post_title) ? $post->ID : $post->post_title),
                     'edit_link' => sprintf("%spost.php?post=%s&action=edit", admin_url(), $post->ID),
                 ];
