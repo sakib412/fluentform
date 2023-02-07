@@ -195,7 +195,7 @@
                         </el-button>
                         <el-dropdown-menu slot="dropdown">
                             <el-dropdown-item command="csv">{{ $t('Export as') }} CSV</el-dropdown-item>
-                            <el-dropdown-item command="xlsx">{{ $t('Export as') }} Excel (xlsv)</el-dropdown-item>
+                            <el-dropdown-item command="xlsx">{{ $t('Export as') }} Excel (xlsx)</el-dropdown-item>
                             <el-dropdown-item command="ods">{{ $t('Export as') }} ODS</el-dropdown-item>
                             <el-dropdown-item command="json">{{ $t('Export as') }} JSON Data</el-dropdown-item>
                         </el-dropdown-menu>
