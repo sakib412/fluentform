@@ -28,7 +28,8 @@ class FormDataParser
             json_decode($entry->response),
             $fields,
             $form->id,
-            $isHtml
+            $isHtml,
+            $entry
         );
 
         return $entry;
@@ -41,7 +42,8 @@ class FormDataParser
                 json_decode($submission->response),
                 $fields,
                 $form->id,
-                $isHtml
+                $isHtml,
+                $submission
             );
         }
 
@@ -50,7 +52,7 @@ class FormDataParser
         return $submission;
     }
 
-    public static function parseData($response, $fields, $formId, $isHtml = false)
+    public static function parseData($response, $fields, $formId, $isHtml = false, $submission = [])
     {
         $trans = [];
 
@@ -61,7 +63,8 @@ class FormDataParser
                     $response->{$field_key},
                     $field,
                     $formId,
-                    $isHtml
+                    $isHtml,
+                    $submission
                 );
                 $trans[$field_key] = $value;
             } else {

@@ -186,7 +186,8 @@ class ShortCodeParser
                 static::$store['original_inputs'][$key],
                 $field,
                 static::getForm()->id,
-                $isHtml
+                $isHtml,
+                static::$entry
             );
         }
 
@@ -195,7 +196,8 @@ class ShortCodeParser
             static::$store['inputs'][$key],
             $field,
             static::getForm()->id,
-            $isHtml
+            $isHtml,
+            static::$entry
         );
     }
 
