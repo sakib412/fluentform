@@ -83,6 +83,10 @@ class EditorShortcodeParser
                 return static::parseRandomString($handler);
             }
 
+            if (false !== strpos($handler, 'random_number.')) {
+                return static::parseRandomNumber($handler);
+            }
+
             if (false !== strpos($handler, 'user.')) {
                 $value = self::parseUserProperties($handler);
                 if (is_array($value) || is_object($value)) {
@@ -371,5 +375,30 @@ class EditorShortcodeParser
         $exploded = explode('.', $value);
         $prefix = array_pop($exploded);
         return $prefix . uniqid();
+    }
+    
+    /**
+     * Generate a random number
+     *
+     * @param $value
+     *
+     * @return int
+     */
+    public static function parseRandomNumber($value)
+    {
+        $exploded = explode('.', $value);
+        $length = intval(array_pop($exploded));
+        
+        $number = '';
+        $characters = '0123456789';
+        
+        $max = strlen($characters) - 1;
+        $number .= $characters[mt_rand(1, $max)];
+        
+        for ($i = 0; $i < $length - 1; $i++) {
+            $number .= $characters[mt_rand(0, $max)];
+        }
+        
+        return apply_filters('fluentform/random_number_generator_numbers', $number, $length);
     }
 }
