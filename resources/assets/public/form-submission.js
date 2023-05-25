@@ -690,8 +690,15 @@ jQuery(document).ready(function () {
                             errorObject = [errorObject];
                         }
                         $.each(errorObject, function (index, errorString) {
+                            let name = getElement(elementName).attr('name');
+    
+                            // return if error-stack already contain same message
+                            if (errorStack.find(`div[data-name="${name}"]`).length) {
+                                return;
+                            }
                             var errorHtml = $('<div/>', {
-                                'class': 'error text-danger'
+                                'class': 'error text-danger',
+                                'data-name' : name
                             });
                             var cross = $('<span/>', {
                                 class: 'error-clear',
@@ -699,7 +706,7 @@ jQuery(document).ready(function () {
                             });
                             var text = $('<span/>', {
                                 class: 'error-text',
-                                'data-name': getElement(elementName).attr('name'),
+                                'data-name': name,
                                 html: errorString
                             });
                             errorHtml.attr('role', 'alert');
@@ -727,7 +734,6 @@ jQuery(document).ready(function () {
                     errorStack
                         .on('click', '.error-clear', function () {
                             $(this).closest('div').remove();
-                            errorStack.hide();
                         })
                         .on('click', '.error-text', function () {
                             var el = $(`[name='${$(this).data('name')}']`).first();
@@ -850,6 +856,45 @@ jQuery(document).ready(function () {
                     $theForm.find('.ff-el-tooltip').on('mouseleave', function () {
                         $('.ff-el-pop-content').remove();
                     });
+    
+                    // check handle error on change and do stuff
+                    const errorHandleSetting = form?.settings?.layout?.errorMessageHandle;
+                    if (errorHandleSetting && errorHandleSetting === 'on_change') {
+                        // add event listener in every input field for real time validation
+                        $theForm.find('.ff-el-group,.ff_repeater_table').on('keyup change', 'input,select,textarea', function () {
+                            try {
+                                window.ff_disable_error_clear = false;
+                                validate($(this))
+                
+                                //remove existing error message real-time from error-stack, when validation pass
+                                const errorStack = $theForm.parent().find('.ff-errors-in-stack');
+                                const name = $(this).attr('name')
+                                if (errorStack.length && errorStack.find(`div[data-name="${name}"]`).length) {
+                                    errorStack.find(`div[data-name="${name}"]`).remove()
+                                }
+                            } catch (e) {
+                                if (!(e instanceof ffValidationError)) {
+                                    throw e;
+                                }
+                                window.ff_disable_error_clear = true; // make error clear disable for showing error messages
+                                const errorShowPlacement = form.settings?.layout.errorMessagePlacement;
+                                if (!errorShowPlacement || errorShowPlacement === 'stackToBottom') {
+                                    //display error message real-time on error-stack, when validation fail
+                                    showErrorInStack(e.messages);
+                                } else {
+                                    //display error message real-time on field below, when validation fail
+                                    $.each(e.messages, function (element, messages) {
+                                        if (typeof messages === 'string') {
+                                            messages = [messages];
+                                        }
+                                        $.each(messages, function (rule, message) {
+                                            showErrorBelowElement(element, message);
+                                        });
+                                    });
+                                }
+                            }
+                        });
+                    }
                 };
 
                 var addGlobalValidator = function (key, callback) {

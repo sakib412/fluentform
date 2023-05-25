@@ -38,7 +38,8 @@
                     layout: {
                         labelPlacement: 'top',
                         helpMessagePlacement: 'with_label',
-                        errorMessagePlacement: 'inline'
+                        errorMessagePlacement: 'inline',
+	                    errorMessageHandle: 'after_submit'
                     },
                     misc: {
                         isIpLogingDisabled: false,
@@ -77,7 +78,8 @@
                             settings.layout = {
                                 labelPlacement: 'top',
                                 helpMessagePlacement: 'with_label',
-                                errorMessagePlacement: 'inline'
+                                errorMessagePlacement: 'inline',
+	                            errorMessageHandle: 'after_submit'
                             };
                         }
                         this.formSettings = Object.assign(this.formSettings, settings);

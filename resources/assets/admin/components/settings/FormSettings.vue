@@ -264,6 +264,34 @@
                                     </el-form-item>
                                 </el-col>
                                 <el-col :sm="24" :md="6">
+                                    <!--Error Message handle-->
+                                    <el-form-item class="ff-form-item">
+                                        <template slot="label">
+                                            {{ $t('Error Message Handle') }}
+
+                                            <el-tooltip class="item" placement="bottom-start" popper-class="ff_tooltip_wrap">
+                                                <div slot="content">
+                                                    <p>
+                                                        {{ $t('Select the default error message handle. Error messages can be handle after form submit, or immediate after change field value.')}}
+                                                    </p>
+                                                </div>
+
+                                                <i class="ff-icon ff-icon-info-filled text-primary"></i>
+                                            </el-tooltip>
+                                        </template>
+
+                                        <el-select class="w-100 ff-input-s1" v-model="formSettings.layout.errorMessageHandle">
+                                            <el-option
+                                                v-for="(label, value) in errorMessagesHandle"
+                                                :label="label"
+                                                :key="value"
+                                                :value="value"
+                                            >
+                                            </el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :sm="24" :md="6">
                                     <!--Required asterisk mark position -->
                                     <el-form-item class="ff-form-item">
                                         <template slot="label">
@@ -592,6 +620,10 @@
                     'inline': 'Below Input Fields',
                     'stackToBottom': 'Stacked after Form'
                 },
+	            errorMessagesHandle: {
+		            'after_submit': 'After Form Submit',
+		            'on_change': 'Real Time (On Change)'
+	            },
                 asteriskPlacementMock: {
                     '': 'None',
                     'asterisk-left': 'Left to Label',
@@ -665,6 +697,7 @@
                         asteriskPlacement: 'asterisk-right',
                         helpMessagePlacement: 'with_label',
                         errorMessagePlacement: 'inline',
+	                    errorMessageHandle: 'after_submit',
                         cssClassName: ''
                     }
                 }
@@ -682,7 +715,7 @@
                                 settings.restrictions = {};
                             if (!settings.layout)
                                 settings.layout = {};
-
+		                        settings.layout.errorMessageHandle ||= 'after_submit';
                             if (!settings.restrictions.limitNumberOfEntries)
                                 settings.restrictions.limitNumberOfEntries = {};
                             if (!settings.restrictions.scheduleForm)

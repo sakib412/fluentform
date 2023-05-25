@@ -138,6 +138,7 @@ class FormSettings
             'labelPlacement'             => 'sanitize_text_field',
             'helpMessagePlacement'       => 'sanitize_text_field',
             'errorMessagePlacement'      => 'sanitize_text_field',
+            'errorMessageHandle'         => 'sanitize_text_field',
             'asteriskPlacement'          => 'sanitize_text_field',
             'delete_entry_on_submission' => 'sanitize_text_field',
             'id'                         => 'intval',

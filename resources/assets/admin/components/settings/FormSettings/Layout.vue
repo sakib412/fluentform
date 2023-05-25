@@ -80,6 +80,31 @@
                             </el-select>
                         </el-form-item>
                     </el-col>
+                    <el-col :lg="8">
+                        <!-- Error message handle -->
+                        <el-form-item class="ff-form-item">
+                            <template slot="label">
+                                {{ $t('Error Message Handle') }}
+
+                                <el-tooltip class="item" placement="bottom-start" popper-class="ff_tooltip_wrap">
+                                    <div slot="content">
+                                        <p>
+                                            {{ $t('When form validation error messages will be shown') }}
+                                        </p>
+                                    </div>
+                                    <i class="ff-icon ff-icon-info-filled text-primary"></i>
+                                </el-tooltip>
+                            </template>
+
+                            <el-select class="w-100 ff-input-s1" v-model="layout.errorMessageHandle">
+                                <el-option
+                                    v-for="(label, value) in {'after_submit': 'After Form Submit', 'on_change': 'Real Time (On Change)'}"
+                                    :key="value"
+                                    :label="label" :value="value"
+                                ></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
                 </el-row>
             </card-body>
         </card>
@@ -638,7 +663,11 @@
                     'inline': 'Show error messages after each input',
                     'stackToBottom': 'Show all error messages after submit button as stack'
                 },
-                akismet_available: window.FluentFormApp.akismet_activated,
+	            errorMessagesHandle: {
+		            'after_submit': 'After Submit',
+		            'on_change': 'On Change'
+	            },
+	            akismet_available: window.FluentFormApp.akismet_activated,
                 layout: {},
                 misc: {},
                 sending_days: {

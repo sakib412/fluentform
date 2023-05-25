@@ -23,6 +23,12 @@ add_filter('fluentform/addons_extra_menu', function ($menus) {
 add_filter('fluentform/get_global_settings_values', function ($values, $key) {
     if (is_array($key)) {
         if (in_array('_fluentform_global_form_settings', $key)) {
+            if (
+                isset($values['_fluentform_global_form_settings']['layout']) &&
+                !isset($values['_fluentform_global_form_settings']['layout']['errorMessageHandle'])
+            ) {
+                $values['_fluentform_global_form_settings']['layout']['errorMessageHandle'] = 'after_submit';
+            }
             $values['file_upload_optoins'] = FluentForm\App\Helpers\Helper::fileUploadLocations();
         }
 

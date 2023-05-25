@@ -51,6 +51,7 @@ class ActivationHandler
                     'asteriskPlacement'     => 'asterisk-right',
                     'helpMessagePlacement'  => 'with_label',
                     'errorMessagePlacement' => 'inline',
+                    'errorMessageHandle'    => 'after_submit',
                     'cssClassName'          => '',
                 ],
             ], 'no');

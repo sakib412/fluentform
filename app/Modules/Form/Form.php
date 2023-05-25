@@ -223,6 +223,7 @@ class Form
                 'labelPlacement'        => 'top',
                 'helpMessagePlacement'  => 'with_label',
                 'errorMessagePlacement' => 'inline',
+                'errorMessageHandle'    => 'after_submit',
                 'cssClassName'          => '',
                 'asteriskPlacement'     => 'asterisk-right'
             ],
