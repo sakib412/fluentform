@@ -8,9 +8,14 @@ use FluentForm\App\Models\FormMeta;
 use FluentForm\App\Models\Submission;
 use FluentForm\App\Models\SubmissionMeta;
 use FluentForm\Framework\Helpers\ArrayHelper;
+use FluentForm\App\Helpers\Traits\EditorInitElementResolver;
+use FluentForm\App\Helpers\Traits\GlobalDefaultMessages;
 
 class Helper
 {
+    use GlobalDefaultMessages;
+    use EditorInitElementResolver;
+
     public static $tabIndex = 0;
 
     public static $formInstance = 0;
@@ -343,8 +348,9 @@ class Helper
                     ->where('field_value', $inputValue)
                     ->exists();
                 if ($exist) {
+                    $typeName = ArrayHelper::get($field, 'element', 'input_text');
                     return [
-                        'unique' => ArrayHelper::get($field, 'raw.settings.unique_validation_message'),
+                        'unique' => apply_filters('fluentform/validation_message_unique_'. $typeName, ArrayHelper::get($field, 'raw.settings.unique_validation_message'), $field),
                     ];
                 }
             }

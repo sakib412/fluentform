@@ -29,6 +29,13 @@ add_filter('fluentform/get_global_settings_values', function ($values, $key) {
         if (in_array('_fluentform_turnstile_details', $key)) {
             $values = FluentForm\App\Modules\Turnstile\Turnstile::ensureSettings($values);
         }
+
+        if (in_array('_fluentform_global_default_message_setting_fields', $key)) {
+            $values['_fluentform_global_default_message_setting_fields'] = \FluentForm\App\Helpers\Helper::globalDefaultMessageSettingFields();
+        }
+        if (in_array('_fluentform_global_form_settings', $key) && !isset($values['_fluentform_global_form_settings']['default_messages'])) {
+            $values['_fluentform_global_form_settings']['default_messages'] = \FluentForm\App\Helpers\Helper::getAllGlobalDefaultMessages();
+        }
     }
 
     return $values;
@@ -180,6 +187,37 @@ foreach ($elements as $element) {
         return \FluentForm\App\Modules\Form\FormDataParser::formatValue($response);
     }, 10, 4);
 }
+
+/*
+ * Validation rule wise resolve global validation message, if message is empty.
+ * @note - Message is only empty when set validation message as global.
+ */
+$rules = [
+    "required"            => "required",
+    "email"               => "email",
+    "numeric"             => "numeric",
+    "minimum"             => "min",
+    "maximum"             => "max",
+    "digits"              => "digits",
+    "url"                 => "url",
+    "allowed_image_types" => "allowed_image_types",
+    "allowed_file_types"  => "allowed_file_types",
+    "max_file_size"       => "max_file_size",
+    "max_file_count"      => "max_file_count",
+    "valid_phone_number"  => "valid_phone_number",
+];
+$defaultGlobalMessages = \FluentForm\App\Helpers\Helper::getAllGlobalDefaultMessages();
+foreach ($rules as $key => $ruleName) {
+    $app->addFilter('fluentform/validation_message_' . $ruleName,
+        function ($message) use ($defaultGlobalMessages, $key) {
+            if (!$message && isset($defaultGlobalMessages[$key])) {
+                $message = $defaultGlobalMessages[$key];
+            }
+            return $message;
+        }
+    );
+}
+
 
 $app->addFilter('fluentform/response_render_textarea', function ($value, $field, $formId, $isHtml) {
     $value = $value ? nl2br($value) : $value;

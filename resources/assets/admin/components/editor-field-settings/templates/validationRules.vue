@@ -15,13 +15,22 @@
                 :listItem="tabularGridRequiredRow" />
 
             <transition name="slide-fade">
-                <div v-if="validation_rules[key].value">
-                    <el-form-item>
-                        <elLabel slot="label" :label="$t('Error Message')"
-                                :helpText="`${$t('This message will be shown if validation fails for')} ${repoItem.label}`">
-                        </elLabel>
-                        <el-input v-model="validation_rules[key].message" type="text"></el-input>
-                    </el-form-item>
+                <div v-if="validation_rules[key].value" style="padding-left: 10px; border-left:1px dotted #dcdfe6;">
+                    <ff_input-radio
+                        :listItem="{
+                            label:'Error Message',
+                            options:[{label:'Global', value:true},{label:'Custom', value:false}],
+                            help_text:`${$t('This message will be shown if validation fails for')} ${repoItem.label}`
+					    }"
+                        v-model="validation_rules[key].global"
+                    />
+                    <transition name="slide-fade">
+                        <div v-if="!validation_rules[key].global" style="max-height: 60px;">
+                            <el-form-item>
+                                <el-input v-model="validation_rules[key].message" type="text"></el-input>
+                            </el-form-item>
+                        </div>
+                    </transition>
                 </div>
             </transition>
         </div>

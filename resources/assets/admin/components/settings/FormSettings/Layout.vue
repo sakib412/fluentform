@@ -249,6 +249,48 @@
             </card-body>
         </card>
 
+        <!-- Default Messages -->
+        <card id="default-messages">
+            <card-head>
+                <h5 class="title"> {{$t('Default Messages') }}</h5>
+                <p class="text" style="max-width: 650px;">
+                    {{
+                        $t("These messages will be used as default messages of all form. These messages will be ignored when field error message set as custom.")
+                    }}
+                </p>
+            </card-head>
+            <card-body>
+                <template v-for="(field, fieldKey) in default_message_setting_fields">
+                    <el-form-item>
+                        <template slot="label">
+                            {{ field.label }}
+                            <el-tooltip class="item" placement="bottom-start" popper-class="ff_tooltip_wrap">
+                                <div slot="content">
+                                    <p>
+                                        {{ field.help_text }}
+                                    </p>
+                                </div>
+                                <i class="ff-icon ff-icon-info-filled text-primary"></i>
+                            </el-tooltip>
+                        </template>
+
+                        <el-input
+                            v-if="field.type === 'textarea'"
+                            type="textarea"
+                            :row="field.row ? field.row : 3"
+                            :placeholder="field.placeholder|| $t('Global Message For ') + field.label"
+                            v-model="default_messages[fieldKey]"
+                        />
+                        <el-input
+                            v-else
+                            :placeholder="field.placeholder|| $t('Global Message For ') + field.label"
+                            v-model="default_messages[fieldKey]"
+                        />
+                    </el-form-item>
+                </template>
+            </card-body>
+        </card>
+
         <card id="miscellaneous">
             <card-head>
                 <card-head-group>
@@ -621,7 +663,10 @@
             },
             captcha_status: {
                 required: true
-            }
+            },
+	        default_message_setting_fields: {
+		        required: true
+	        },
         },
         data() {
             return {
@@ -641,6 +686,7 @@
                 akismet_available: window.FluentFormApp.akismet_activated,
                 layout: {},
                 misc: {},
+	            default_messages: {},
                 sending_days: {
                     Mon: 'Monday',
                     Tue: 'Tuesday',
@@ -700,6 +746,13 @@
             this.scrollTo();
 
             this.layout = this.data.layout;
+
+	        for (const fieldKey in this.default_message_setting_fields) {
+		        if (!(fieldKey in this.data.default_messages)) {
+			        this.$set(this.data.default_messages, fieldKey, this.default_message_setting_fields[fieldKey].value);
+		        }
+	        }
+	        this.default_messages = this.data.default_messages
 
             if (!this.data.misc.akismet_validation) {
                 this.$set(this.data.misc, 'akismet_validation', 'mark_as_spam');

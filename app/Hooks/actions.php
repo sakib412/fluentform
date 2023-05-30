@@ -226,143 +226,99 @@ add_action('wp_print_scripts', function () {
 }, 1);
 
 $app->addAction('fluentform/loading_editor_assets', function ($form) {
-    add_filter('fluentform/editor_init_element_input_name', function ($field) {
-        if (empty($field['settings']['label_placement'])) {
-            $field['settings']['label_placement'] = '';
+    if ($inputs = \FluentForm\App\Modules\Form\FormFieldsParser::getInputs($form, ['element'])) {
+        $elements = [];
+        foreach ($inputs as $input) {
+            if (!in_array($input['element'], $elements)) {
+                $elements[] = $input['element'];
+            }
         }
 
-        return $field;
-    });
+        foreach ($elements as $elementName) {
+            add_filter('fluentform/editor_init_element_'. $elementName, function ($element) use ($elementName) {
+                if ('input_name' === $elementName) {
+                    Helper::resolveSettingsOptions($element, ['label_placement']);
+                } elseif (in_array($elementName, ['input_radio', 'input_checkbox', 'select', 'select_country'])) {
+                    Helper::resolveSettingsAdvancedOptions($element, $elementName);
+                    if (in_array($elementName, ['input_radio', 'input_checkbox'])) {
+                        Helper::resolveSettingsOptions($element, [
+                            'layout_class',
+                            'dynamic_default_value',
+                            'randomize_options' => 'no',
+                        ]);
+                    } elseif ('select' === $elementName) {
+                        Helper::resolveSettingsOptions($element, [
+                            'values_visible'    => false,
+                            'randomize_options' => 'no',
+                        ]);
 
-    $upgradableCheckInputs = [
-        'input_radio',
-        'select',
-        'select_country',
-        'input_checkbox',
-    ];
-
-    foreach ($upgradableCheckInputs as $upgradeElement) {
-        add_filter('fluentform/editor_init_element_' . $upgradeElement, function ($element) use ($upgradeElement) {
-            if (!\FluentForm\Framework\Helpers\ArrayHelper::get($element, 'settings.advanced_options')) {
-                $formattedOptions = [];
-                $oldOptions = \FluentForm\Framework\Helpers\ArrayHelper::get($element, 'options', []);
-                foreach ($oldOptions as $value => $label) {
-                    $formattedOptions[] = [
-                        'label'      => $label,
-                        'value'      => $value,
-                        'calc_value' => '',
-                        'image'      => '',
-                    ];
+                        if (\FluentForm\Framework\Helpers\ArrayHelper::get($element, 'attributes.multiple')) {
+                            Helper::resolveSettingsOptions($element, ['max_selection']);
+                            if (isset($element['settings']['enable_select_2'])) {
+                                \FluentForm\Framework\Helpers\ArrayHelper::forget($element, 'settings.enable_select_2');
+                            }
+                        } else {
+                            Helper::resolveSettingsOptions($element, [
+                                'enable_select_2' => 'no'
+                            ]);
+                        }
+                    } else {
+                        Helper::resolveSettingsOptions($element, [
+                            'enable_select_2' => 'no'
+                        ]);
+                    }
+                } elseif (in_array($elementName, ['input_file', 'input_image'])) {
+                    Helper::resolveSettingsOptions($element, [
+                        'upload_file_location' => 'default',
+                        'file_location_type'   => 'follow_global_settings',
+                    ]);
+                } elseif ('gdpr_agreement' === $elementName) {
+                    Helper::resolveSettingsOptions($element, ['required_field_message']);
+                } elseif ('textarea' === $elementName) {
+                    Helper::resolveAttributeOption($element, ['maxlength']);
+                } elseif ('input_date' === $elementName) {
+                    Helper::resolveSettingsOptions($element, ['date_config']);
+                } elseif ('input_number' === $elementName) {
+                    Helper::resolveSettingsOptions($element,
+                        ['number_step', 'numeric_formatter', 'prefix_label', 'suffix_label']
+                    );
+                } elseif ('input_email' === $elementName) {
+                    Helper::resolveSettingsOptions($element,
+                        [
+                            'unique_validation_message' => __('Email address need to be unique.', 'fluentform'),
+                            'is_unique'                 => 'no',
+                            'prefix_label',
+                            'suffix_label',
+                        ]
+                    );
+                } elseif ('input_text' === $elementName) {
+                    Helper::resolveAttributeOption($element, ['maxlength']);
+                    if (isset($item['attributes']['data-mask'])) {
+                        Helper::resolveSettingsOptions($element, [
+                                'data-mask-reverse'       => 'no',
+                                'data-clear-if-not-match' => 'no',
+                            ]
+                        );
+                    } else {
+                        Helper::resolveSettingsOptions($element, [
+                                'unique_validation_message' => __('This value need to be unique.', 'fluentform'),
+                                'is_unique'                 => 'no',
+                            ]
+                        );
+                    }
+                    Helper::resolveSettingsOptions($element, ['prefix_label', 'suffix_label']);
                 }
-                $element['settings']['advanced_options'] = $formattedOptions;
-                $element['settings']['enable_image_input'] = false;
-                $element['settings']['calc_value_status'] = false;
-                unset($element['options']);
 
-                if ('input_radio' == $upgradeElement || 'input_checkbox' == $upgradeElement) {
-                    $element['editor_options']['template'] = 'inputCheckable';
-                }
-            }
-
-            if (!isset($element['settings']['layout_class']) && in_array($upgradeElement, ['input_radio', 'input_checkbox'])) {
-                $element['settings']['layout_class'] = '';
-            }
-
-            if (!isset($element['settings']['dynamic_default_value'])) {
-                $element['settings']['dynamic_default_value'] = '';
-            }
-
-            if ('select_country' != $upgradeElement && !isset($element['settings']['randomize_options'])) {
-                $element['settings']['randomize_options'] = 'no';
-            }
-
-            if ('select' == $upgradeElement && \FluentForm\Framework\Helpers\ArrayHelper::get($element, 'attributes.multiple')) {
-                if (empty($element['settings']['max_selection'])) {
-                    $element['settings']['max_selection'] = '';
-                }
-                if (isset($element['settings']['enable_select_2'])) {
-                    \FluentForm\Framework\Helpers\ArrayHelper::forget($element, 'settings.enable_select_2');
-                }
-            }
-
-            if (
-                (
-                    (
-                        'select' == $upgradeElement &&
-                        !\FluentForm\Framework\Helpers\ArrayHelper::get($element, 'attributes.multiple')
-                    ) ||
-                    'select_country' == $upgradeElement
-                ) &&
-                !isset($element['settings']['enable_select_2'])
-            ) {
-                $element['settings']['enable_select_2'] = 'no';
-            }
-
-            if ('select_country' != $upgradeElement && !isset($element['settings']['values_visible'])) {
-                $element['settings']['values_visible'] = false;
-            }
-
-            return $element;
-        });
+                Helper::resolveValidationRulesGlobalOption($element);
+                return $element;
+            });
+        }
     }
-
-    $upgradableFileInputs = [
-        'input_file',
-        'input_image',
-    ];
-    foreach ($upgradableFileInputs as $upgradeElement) {
-        add_filter('fluentform/editor_init_element_' . $upgradeElement, function ($element) {
-            if (!isset($element['settings']['upload_file_location'])) {
-                $element['settings']['upload_file_location'] = 'default';
-            }
-            if (!isset($element['settings']['file_location_type'])) {
-                $element['settings']['file_location_type'] = 'follow_global_settings';
-            }
-
-            return $element;
-        });
-    }
-
-    add_filter('fluentform/editor_init_element_gdpr_agreement', function ($element) {
-        if (!isset($element['settings']['required_field_message'])) {
-            $element['settings']['required_field_message'] = '';
-        }
-
-        return $element;
-    });
-
-    add_filter('fluentform/editor_init_element_input_text', function ($element) {
-        if (!isset($element['attributes']['maxlength'])) {
-            $element['attributes']['maxlength'] = '';
-        }
-
-        return $element;
-    });
-
-    add_filter('fluentform/editor_init_element_textarea', function ($element) {
-        if (!isset($element['attributes']['maxlength'])) {
-            $element['attributes']['maxlength'] = '';
-        }
-
-        return $element;
-    });
-
-    add_filter('fluentform/editor_init_element_input_date', function ($item) {
-        if (!isset($item['settings']['date_config'])) {
-            $item['settings']['date_config'] = '';
-        }
-
-        return $item;
-    });
-
     add_filter('fluentform/editor_init_element_container', function ($item) {
-        if (!isset($item['settings']['conditional_logics'])) {
-            $item['settings']['conditional_logics'] = [];
-        }
-
-        if (!isset($item['settings']['container_width'])) {
-            $item['settings']['container_width'] = '';
-        }
+        Helper::resolveSettingsOptions($item, [
+            'conditional_logics' => [],
+            'container_width' => ''
+        ]);
 
         $shouldSetWidth = !empty($item['columns']) && (!isset($item['columns'][0]['width']) || !$item['columns'][0]['width']);
 
@@ -377,82 +333,18 @@ $app->addAction('fluentform/loading_editor_assets', function ($form) {
         return $item;
     });
 
-    add_filter('fluentform/editor_init_element_input_number', function ($item) {
-        if (!isset($item['settings']['number_step'])) {
-            $item['settings']['number_step'] = '';
-        }
-        if (!isset($item['settings']['numeric_formatter'])) {
-            $item['settings']['numeric_formatter'] = '';
-        }
-        if (!isset($item['settings']['prefix_label'])) {
-            $item['settings']['prefix_label'] = '';
-        }
-        if (!isset($item['settings']['suffix_label'])) {
-            $item['settings']['suffix_label'] = '';
-        }
-
-        return $item;
-    });
-
-    add_filter('fluentform/editor_init_element_input_email', function ($item) {
-        if (!isset($item['settings']['is_unique'])) {
-            $item['settings']['is_unique'] = 'no';
-        }
-        if (!isset($item['settings']['unique_validation_message'])) {
-            $item['settings']['unique_validation_message'] = __('Email address need to be unique.', 'fluentform');
-        }
-        if (!isset($item['settings']['prefix_label'])) {
-            $item['settings']['prefix_label'] = '';
-        }
-        if (!isset($item['settings']['suffix_label'])) {
-            $item['settings']['suffix_label'] = '';
-        }
-
-        return $item;
-    });
-
-    add_filter('fluentform/editor_init_element_input_text', function ($item) {
-        if (isset($item['attributes']['data-mask'])) {
-            if (!isset($item['settings']['data-mask-reverse'])) {
-                $item['settings']['data-mask-reverse'] = 'no';
-            }
-            if (!isset($item['settings']['data-clear-if-not-match'])) {
-                $item['settings']['data-clear-if-not-match'] = 'no';
-            }
-        } else {
-            if (!isset($item['settings']['is_unique'])) {
-                $item['settings']['is_unique'] = 'no';
-            }
-            if (!isset($item['settings']['unique_validation_message'])) {
-                $item['settings']['unique_validation_message'] = __('This field value need to be unique.', 'fluentform');
-            }
-        }
-
-        if (!isset($item['settings']['prefix_label'])) {
-            $item['settings']['prefix_label'] = '';
-        }
-        if (!isset($item['settings']['suffix_label'])) {
-            $item['settings']['suffix_label'] = '';
-        }
-
-        return $item;
-    });
-
     add_filter('fluentform/editor_init_element_recaptcha', function ($item, $form) {
-        $item['attributes']['name'] = 'g-recaptcha-response';
-
+        Helper::resolveAttributeOption($item, ['name' => 'g-recaptcha-response']);
         return $item;
     }, 10, 2);
 
     add_filter('fluentform/editor_init_element_hcaptcha', function ($item, $form) {
-        $item['attributes']['name'] = 'h-captcha-response';
-
+        Helper::resolveAttributeOption($item, ['name' => 'h-captcha-response']);
         return $item;
     }, 10, 2);
 
     add_filter('fluentform/editor_init_element_turnstile', function ($item, $form) {
-        $item['attributes']['name'] = 'cf-turnstile-response';
-
+        Helper::resolveAttributeOption($item, ['name' => 'cf-turnstile-response']);
         return $item;
     }, 10, 2);
 }, 10);

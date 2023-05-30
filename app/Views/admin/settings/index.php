@@ -72,6 +72,16 @@ use FluentForm\Framework\Helpers\ArrayHelper;
                             </li>
                             <li>
                                 <a class="ff-page-scroll"
+                                   data-section-id="#default-messages"
+                                   data-hash="settings"
+                                   href="<?php echo esc_url(Helper::makeMenuUrl('fluent_forms_settings', [
+                                       'hash' => 'settings'
+                                   ])); ?>">
+                                    <?php echo __('Default Messages', 'fluentform'); ?>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="ff-page-scroll"
                                    data-section-id="#miscellaneous"
                                    data-hash="settings"
                                    href="<?php echo esc_url(Helper::makeMenuUrl('fluent_forms_settings', [
