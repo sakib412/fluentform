@@ -291,6 +291,8 @@
                                 :label="column.label"
                                 :show-overflow-tooltip="isCompact"
                                 min-width="200"
+                                sortable="custom"
+                                :prop="'user_inputs_column_field-' + column.field"
                                 :key="index">
                             <template slot-scope="scope">
                                 <span v-html="scope.row.user_inputs[column.field]"></span>
@@ -299,6 +301,8 @@
 
                         <el-table-column
                                 label="Entry Status"
+                                sortable
+                                prop="status"
                                 width="120px">
                             <template slot-scope="scope">
                                 {{ getStatusName(scope.row.status) }}
@@ -308,6 +312,8 @@
                         <template v-if="has_payment">
                             <el-table-column
                                     :label="$t('Amount')"
+                                    sortable="custom"
+                                    prop="payment_total"
                                     min-width="120px">
                                 <template slot-scope="scope">
                                     <span v-html="formatMoney(scope.row.payment_total, scope.row.currency)"></span>
@@ -315,7 +321,9 @@
                             </el-table-column>
                             <el-table-column
                                     :label="$t('Payment Status')"
-                                    min-width="120px">
+                                    sortable
+                                    prop="payment_status"
+                                    min-width="140px">
                                 <template slot-scope="scope">
                                     <span class="ff_badge"
                                         :class="'ff_badge_'+scope.row.payment_status"
@@ -327,7 +335,9 @@
                             </el-table-column>
                             <el-table-column
                                     :label="$t('Payment Method')"
-                                    min-width="120px">
+                                    sortable
+                                    prop="payment_method"
+                                    min-width="140px">
                                 <template slot-scope="scope">
                                     <span class="ff_badge" v-if="scope.row.payment_method"
                                         :class="`ff_badge_${
@@ -344,6 +354,8 @@
 
                         <el-table-column
                                 :label="$t('Submitted at')"
+                                sortable
+                                prop="created_at"
                                 width="120px">
                             <template slot-scope="scope">
                                 {{ dateFormat(scope.row.created_at) }}
@@ -732,8 +744,40 @@
                     if (column.prop === 'id') {
                         this.sort_by = (column.order === 'ascending') ? 'ASC' : 'DESC';
                         this.getData();
+                    } else if (column.prop.includes('user_inputs_column_field-')) {
+						let field = column.prop.split('user_inputs_column_field-')[1];
+	                    this.entries.sort((a, b) => {
+		                    a = a.user_inputs[field] || "";
+		                    b = b.user_inputs[field] || "";
+		                    return this.getSortOrder(a, b, column.order);
+	                    });
+                    } else if (column.prop === 'payment_total') {
+	                    this.entries.sort((a, b) => {
+		                    return this.getSortOrder(a.payment_total, b.payment_total, column.order);
+	                    });
                     }
                 }
+            },
+
+            getSortOrder(a, b, sortBy) {
+                let order;
+				try {
+					a = a.toString();
+					b = b.toString();
+					const isNumber = (a !== '' && !isNaN(a)) && (b !== '' && !isNaN(b));
+					if (isNumber) {
+						order = Number(a) - Number(b);
+					} else {
+						order = a.localeCompare(b);
+                    }
+					if (sortBy === 'descending') {
+						order ||= -1;
+						order *= -1;
+					}
+                } catch (e) {
+                    order = 0;
+				}
+	            return order;
             },
             handleSelectionChange(val) {
                 this.entrySelections = val;
