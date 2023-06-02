@@ -2,8 +2,8 @@
     <div class="ff_block_item">
         <el-row :gutter="6">
             <el-col :md="18">
-                <h6 class="ff_block_title mb-1">{{ $t('Advanced') }}</h6>
-                <p class="ff_block_text">{{ $t('Administrators have full access to Fluent Forms.Add other managers giving specific permissions.') }}</p>
+                <h6 class="ff_block_title mb-1">{{ $t('Global Inventory') }}</h6>
+                <p class="ff_block_text">{{ $t('Global Inventories can be used accross different forms') }}</p>
             </el-col>
             <el-col :md="6" class="text-right">
                 <el-button
@@ -12,7 +12,7 @@
                     @click="showForm()"
                     size="medium"
                 >
-                    {{ $t('Add Manager') }}
+                    {{ $t('Add Inventory') }}
                 </el-button>
             </el-col>
         </el-row>
@@ -68,7 +68,7 @@
                     </el-table>
                 </el-skeleton>
             </div>
-    
+
             <div class="ff_pagination_wrap text-right mt-4">
                 <el-pagination
                     class="ff_pagination"
@@ -97,35 +97,26 @@
             <el-form :data="manager" label-position="top" class="mt-4">
                 <el-form-item>
                     <template slot="label">
-                        <h6>{{$t('User Email')}}</h6>
+                        <h6>{{$t('Inventory Name')}}</h6>
                     </template>
                     <el-input
                         type="email"
                         :placeholder="$t('User Email Address')"
                         v-model="manager.email"
                     />
-
                     <error-view field="email" :errors="errors"/>
-
-                    <p class="text-note mt-2" v-show="!manager.id">
-                        {{ $t('Please provide email address of your existing user.') }}
-                    </p>
                 </el-form-item>
 
                 <el-form-item>
                     <template slot="label">
-                        <h6>{{$t('Permissions')}}</h6>
+                        <h6>{{$t('Quantity Per Combination')}}</h6>
                     </template>
+                    <el-input
+                            type="number"
+                            :placeholder="$t('Amount')"
+                            v-model="manager.email"
+                    />
 
-                    <el-checkbox-group v-model="manager.permissions" class="ff_checkbox_group_col_2">
-                        <el-checkbox
-                            v-for="(permission, permissionKey) in permissions"
-                            :label="permissionKey"
-                            :key="permissionKey"
-                        >
-                            {{ permission.title }}
-                        </el-checkbox>
-                    </el-checkbox-group>
 
                     <error-view field="permissions" :errors="errors"/>
                 </el-form-item>
@@ -215,7 +206,7 @@ export default {
         },
 
         getModalTitle() {
-            return this.manager.id ? "Edit Manager" : "Add Manager";
+            return this.manager.id ? "Edit Inventory" : "Add Inventory";
         },
 
         store() {

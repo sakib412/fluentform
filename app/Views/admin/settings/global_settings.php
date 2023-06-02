@@ -33,7 +33,7 @@ use FluentForm\Framework\Helpers\ArrayHelper;
             <div class="ff_settings_sidebar ff_layout_section_sidebar">
                 <ul class="ff_settings_list ff_list_button">
                     <li class="ff_list_button_item has_sub_menu">
-                        <a 
+                        <a
                             class="ff_list_button_link"
                             href="#">
                             <?php echo __('General'); ?>
@@ -152,7 +152,17 @@ use FluentForm\Framework\Helpers\ArrayHelper;
                             href="<?php echo esc_url(Helper::makeMenuUrl('fluent_forms_settings', [
                                 'hash' => 'managers'
                             ])); ?>">
-                            <?php echo __('Managers'); ?>
+                            <?php echo __('Managers','fluentform'); ?>
+                        </a>
+                    </li>
+                    <li class="<?php echo esc_attr(Helper::getHtmlElementClass('inventory', $currentComponent)); ?> ff_list_button_item">
+                        <a
+                            class="ff_list_button_link"
+                            data-hash="inventory"
+                            href="<?php echo esc_url(Helper::makeMenuUrl('fluent_forms_settings', [
+                                'hash' => 'inventory'
+                            ])); ?>">
+                            <?php echo __('Inventory Managers','fluentform'); ?>
                         </a>
                     </li>
                     
@@ -166,6 +176,7 @@ use FluentForm\Framework\Helpers\ArrayHelper;
                             <?php echo __('Double Opt-in', 'fluentform'); ?>
                         </a>
                     </li>
+                    
                     
                     <li class="ff_list_button_item has_sub_menu">
                         <a class="ff_list_button_link" href="#">
