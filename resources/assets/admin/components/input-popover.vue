@@ -62,22 +62,22 @@ export default {
             default: 2
         }
     },
-    data() {
-        return {
-            model: this.value,
-        }
-    },
-    watch: {
-        model() {
-            this.$emit('input', this.model);
-        }
-    },
     methods: {
         insertShortcode(codeString) {
             if (this.model == undefined) {
                 this.model = '';
             }
             this.model += codeString.replace(/param_name/, this.attrName);
+        }
+    },
+    computed : {
+		model : {
+			get() {
+				return this.value;
+            },
+            set(value) {
+	            this.$emit('input', value);
+            }
         }
     }
 }
