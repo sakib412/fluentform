@@ -80,7 +80,7 @@
                     return '{radio.' + item.attributes.name + '}';
                 } else if(item.element == 'repeater_field') {
                     return '{repeat.'+item.attributes.name+'}';
-                } else if(item.element == 'multi_payment_component' && item.attributes.type !=='single') {
+                } else if((item.element == 'multi_payment_component' || item.element == 'custom_payment_component') && item.attributes.type !=='single') {
                     return '{payment.'+item.attributes.name+'}';
                 }
             },
@@ -90,7 +90,8 @@
                     'input_number',
                     'repeater_field',
                     'net_promoter_score',
-                    'rangeslider'
+                    'rangeslider',
+                    'custom_payment_component'
                 ];
 
                 if (paymentElements.indexOf(item.element) != -1) {
