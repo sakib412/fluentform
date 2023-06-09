@@ -529,6 +529,7 @@ export default function ($, $theForm, fluentFormVars, formSelector) {
 
                 if (childDomCounts == hiddenDomCounts) {
                     $activeStepDom.find('.step-nav button[data-action=' + actionType + ']').click();
+                    $activeStepDom.find('.step-nav img[data-action=' + actionType + ']').click();
                 }
             }, timeout);
         }
