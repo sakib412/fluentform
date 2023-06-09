@@ -67,7 +67,7 @@
                             @size-change="handleSizeChange"
                             @current-change="goToPage"
                             :current-page.sync="pagination.current_page"
-                            :page-sizes="[2, 10, 20, 50, 100]"
+                            :page-sizes="[5, 10, 20, 50, 100]"
                             :page-size="pagination.per_page"
                             layout="total, sizes, prev, pager, next"
                             :total="pagination.total">
@@ -152,7 +152,7 @@
                 pagination: {
                     total: 0,
                     current_page: 1,
-                    per_page: 10
+                    per_page: 5
                 },
                 errors: new Errors()
             };
@@ -169,21 +169,19 @@
         methods: {
             fetchInventoryList() {
                 this.loading = true;
-                const url = FluentFormsGlobal.$rest.route('getInventoryList');
-                let data = {
-                    per_page: this.pagination.per_page,
-                    page: this.pagination.current_page,
-                }
-
-                FluentFormsGlobal.$rest.get(url, data)
+                FluentFormsGlobal.$get({
+                    action: 'fluentform_get_global_inventory_list',
+                })
                     .then(response => {
-                        this.inventory_list = response.inventory_list;
-                        this.pagination.total = response.total;
+                        this.inventory_list = response.data.inventory_list;
+                        this.pagination.total = Object.keys(response.data.inventory_list).length
                     })
-                    .catch(e => {
-
+                    .fail((errors) => {
+                        if (errors.status == 400) {
+                            this.need_update = true;
+                        }
                     })
-                    .finally(() => {
+                    .always(() => {
                         this.loading = false;
                     });
             },
@@ -205,69 +203,79 @@
             store() {
                 this.loading = true;
 
-                const url = FluentFormsGlobal.$rest.route('storeInventory');
                 let data = {
                     inventory: this.inventory
                 }
-
-                FluentFormsGlobal.$rest.post(url, data)
+                FluentFormsGlobal.$post({
+                    action: 'fluentform_store_global_inventory_list',
+                    inventory: this.inventory
+                })
                     .then(response => {
-                        console.log(response)
-
-                        this.modal = false;
-                        this.$success(response.message);
-                        // this.fetchInventoryList();
+                        console.log(response);
+                        if(response.data.success){
+                            this.$success(response.data.message);
+                            this.fetchInventoryList();
+                        }
                     })
-                    .catch(e => {
-                        console.log(e)
-                        // this.errors.record(e.errors);
+                    .fail((errors) => {
+                        if (errors.status == 400) {
+                            this.need_update = true;
+                        }
                     })
-                    .finally(() => {
+                    .always(() => {
                         this.loading = false;
+                        this.modal = false;
+
                     });
             },
 
             edit(inventory) {
                 this.modal = true;
                 this.inventory = Object.assign({}, inventory);
-                this.fetchInventoryList();
                 this.errors.clear();
             },
 
             remove(inventory) {
-                const url = FluentFormsGlobal.$rest.route('deleteInventory');
-                let data = {
-                    id: inventory.id
-                }
 
-                FluentFormsGlobal.$rest.delete(url, data)
+                FluentFormsGlobal.$post({
+                    action: 'fluentform_delete_global_inventory_list',
+                    slug: inventory.slug
+                })
                     .then(response => {
-                        this.modal = false;
-                        this.$success(response.message);
-                        this.fetchInventoryList();
+                        if(response.data.success){
+                            this.$success(response.data.message);
+                            this.fetchInventoryList();
+                        }
+
                     })
-                    .catch(e => {
-                        this.errors.record(e.errors);
+                    .fail((errors) => {
+                        if (errors.status == 400) {
+                            this.need_update = true;
+                        }
                     })
-                    .finally(() => {
+                    .always(() => {
                         this.loading = false;
+                        this.modal = false;
                     });
             },
 
             goToPage(value) {
                 this.pagination.current_page = value;
-                this.fetchInventoryList();
+                // this.fetchInventoryList();
             },
 
             handleSizeChange(value) {
                 this.pagination.per_page = value;
-                this.fetchInventoryList();
+                // this.fetchInventoryList();
             }
         },
         computed: {
             pagedTableData() {
-                console.log( this.inventory_list.slice(this.pagination.per_page * this.pagination.current_page - this.pagination.per_page, this.pagination.per_page * this.page))
-                return this.inventory_list.slice(0,2)
+
+                const startIndex = this.pagination.per_page * (this.pagination.current_page - 1);
+                const endIndex = startIndex + this.pagination.per_page;
+
+                return Object.values(this.inventory_list).slice(startIndex, endIndex)
             }
         },
         mounted() {

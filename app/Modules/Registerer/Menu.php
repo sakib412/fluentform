@@ -1025,6 +1025,11 @@ class Menu
             'title' => 'Turnstile (Beta)',
         ];
 
+        $components['InventoryManager'] = [
+            'hash'  => 'inventory_manager',
+            'title' => 'InventoryManager',
+        ];
+
         $this->app->view->render('admin.settings.global_settings', [
             'components'       => $components,
             'currentComponent' => $currentComponent,

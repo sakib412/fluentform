@@ -175,23 +175,17 @@ export default {
     methods: {
         fetchManagers() {
             this.loading = true;
-
-            const url = FluentFormsGlobal.$rest.route('getManagers');
-            let data = {
-                per_page: this.pagination.per_page,
-                page: this.pagination.current_page,
-            }
-
-            FluentFormsGlobal.$rest.get(url, data)
-                .then(response => {
-                    this.managers = response.managers;
-                    this.permissions = response.permissions;
-                    this.pagination.total = response.total;
+            FluentFormsGlobal.$post({
+                action: 'fluentform_save_global_double_optin',
+                settings: this.settings
+            })
+                .then((response) => {
+                    this.$success(response.data.message);
                 })
-                .catch(e => {
-
+                .fail((errors) => {
+                    console.log(errors);
                 })
-                .finally(() => {
+                .always(() => {
                     this.loading = false;
                 });
         },
@@ -212,21 +206,22 @@ export default {
         store() {
             this.loading = true;
 
-            const url = FluentFormsGlobal.$rest.route('storeManager');
             let data = {
                 manager: this.manager
             }
-
-            FluentFormsGlobal.$rest.post(url, data)
-                .then(response => {
+            FluentFormsGlobal.$post({
+                action: 'fluentform_save_global_double_optin',
+                settings: this.settings
+            })
+                .then((response) => {
                     this.modal = false;
-                    this.$success(response.message);
-                    this.fetchManagers();
+                    this.$success(response.data.message);
                 })
-                .catch(e => {
+                .fail((errors) => {
                     this.errors.record(e.errors);
+
                 })
-                .finally(() => {
+                .always(() => {
                     this.loading = false;
                 });
         },
