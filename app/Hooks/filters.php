@@ -73,7 +73,12 @@ add_action('fluentform/before_form_validation',function (){
 /*
  * Push captcha in all forms when enabled from global settings
  */
-$app->addFilter('fluentform/rendering_form', function ($form) {
+/**
+ * @param $form
+ * @return mixed
+ */
+function ff_insert_auto_captchas($form)
+{
     $option = get_option('_fluentform_global_form_settings');
     $enabled = \FluentForm\Framework\Helpers\ArrayHelper::get($option, 'misc.autoload_captcha');
     if (!$enabled) {
@@ -121,6 +126,13 @@ $app->addFilter('fluentform/rendering_form', function ($form) {
     }
 
     return $form;
+}
+
+$app->addFilter('fluentform/rendering_form', function ($form) {
+    return ff_insert_auto_captchas($form);
+}, 10, 1);
+$app->addFilter('fluentform/rendering_conversational_form', function ($form) {
+    return ff_insert_auto_captchas($form);
 }, 10, 1);
 
 $elements = [

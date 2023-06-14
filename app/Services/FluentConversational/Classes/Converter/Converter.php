@@ -11,7 +11,7 @@ class Converter
     public static function convert($form)
     {
         $form->fields = json_decode($form->form_fields, true);
-
+        $form = wpFluentForm()->applyFilters('fluentform/rendering_conversational_form', $form);
         $fields = $form->fields['fields'];
 
         $form->submit_button = $form->fields['submitButton'];
@@ -41,11 +41,11 @@ class Converter
             $field = apply_filters('fluentform/rendering_field_data_' . $field['element'], $field, $form);
 
             $question = [
-                'id'              => $field['uniqElKey'],
+                'id'              => ArrayHelper::get($field, 'uniqElKey'),
                 'name'            => ArrayHelper::get($field, 'attributes.name'),
                 'title'           => ArrayHelper::get($field, 'settings.label'),
                 'type'            => ArrayHelper::get($allowedFields, $field['element']),
-                'ff_input_type'   => $field['element'],
+                'ff_input_type'   => ArrayHelper::get($field ,'element'),
                 'container_class' => ArrayHelper::get($field, 'settings.container_class'),
                 'placeholder'     => ArrayHelper::get($field, 'attributes.placeholder'),
                 'maxLength'       => ArrayHelper::get($field, 'attributes.maxlength'),
