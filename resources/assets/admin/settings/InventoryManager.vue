@@ -6,8 +6,8 @@
         <card-body>
             <el-row :gutter="6">
                 <el-col :md="18">
-                    <h6 class="ff_block_title mb-1">{{ $t('Global Inventory') }}</h6>
-                    <p class="ff_block_text">{{ $t('Global Inventories can be used accross different forms') }}</p>
+                    <h6 class="ff_block_title mb-1">{{ $t('Advanced Inventory') }}</h6>
+                    <p class="ff_block_text">{{ $t('Advanced Inventories can be used across different forms. You can manage tickets, items ,event registraion etc.') }}</p>
                 </el-col>
                 <el-col :md="6" class="text-right">
                     <el-button
@@ -26,19 +26,56 @@
                     <el-skeleton :loading="loading" animated :rows="6">
                         <el-table class="ff_table_s2" :data="pagedTableData">
 
-                            <el-table-column :label="$t('Name')" prop="name" width="240" />
-                            <el-table-column :label="$t('Slug')" prop="slug" width="240" />
 
-                            <el-table-column :label="$t('Quantty')" prop="quantity" width="120" />
-
-                            <el-table-column :label="$t('Remaining Quantity')">
+                            <el-table-column type="expand">
                                 <template slot-scope="scope">
+                                    <el-table  v-if="scope.row.details" :data="formatTableData(scope.row.details, scope.row.quantity)" border style="width: 100%">
+                                        <el-table-column prop="name" label="Name"  />
+                                        <el-table-column prop="used_count" label="Used Count"  />
+                                        <el-table-column prop="remaining" label="Remaining" />
+                                    </el-table>
+                                    <span v-else>
+                                      <div class="text-center">   No data available yet </div>
+                                    </span>
 
                                 </template>
                             </el-table-column>
 
-                            <el-table-column :label="$t('Action')" width="90">
+                            <el-table-column :label="$t('Name')" prop="name"  />
+                            <el-table-column :label="$t('Slug')" prop="slug"  />
+
+                            <el-table-column :label="$t('Quantity')" prop="quantity" width="80" />
+
+
+                            <el-table-column :label="$t('Items in Use')" width="150">
                                 <template slot-scope="scope">
+                                    <span v-if="scope.row.details">
+                                          <el-tag
+                                                  type="info"
+                                                  size="mini"
+                                                  v-for="(count, name) in scope.row.details"
+                                                  :key="name"
+                                                  class="mr-1"
+                                          >
+                                            {{ name }}
+                                        </el-tag>
+                                    </span>
+                                </template>
+                            </el-table-column>
+
+                            <el-table-column :label="$t('Action')" width="160">
+                                <template slot-scope="scope">
+
+                                        <el-button
+                                                class="el-button--icon"
+                                                size="mini"
+                                                type="default"
+                                                icon="el-icon-refresh-left"
+                                                @click="resetConfirm(scope.row)"
+                                        >
+                                            Reset
+                                    </el-button>
+
                                     <el-button
                                             class="el-button--icon"
                                             size="mini"
@@ -128,6 +165,24 @@
                     </btn-group>
                 </div>
             </el-dialog>
+
+            <el-dialog
+                    :title="$t('Reset used Inventory Item Quantity')"
+                    :visible.sync="show_reset_form"
+                    v-if="reset_item"
+                    v-loading="reseting"
+                    :append-to-body="true"
+
+                    width="50%">
+                <p>{{ $t('You are about to reset this inventory used count to zero') }}</p>
+                <div>
+
+                </div>
+                <span slot="footer" class="dialog-footer">
+                <el-button type="default" @click="this.show_reset_form=false">{{ $t('Close') }}</el-button>
+                <el-button type="primary" @click="reset()"> {{ $t('Yes, Reset this Item') }}</el-button>
+            </span>
+            </el-dialog>
         </card-body>
     </card>
 </template>
@@ -140,6 +195,7 @@
     import Confirm from "@/admin/components/confirmRemove.vue";
     import BtnGroup from '@/admin/components/BtnGroup/BtnGroup.vue';
     import BtnGroupItem from '@/admin/components/BtnGroup/BtnGroupItem.vue';
+    import ConfirmResetInventory from "@/admin/settings/Inventory/ConfirmResetInventory";
 
     export default {
         name: "InventoryManager",
@@ -152,8 +208,11 @@
                 pagination: {
                     total: 0,
                     current_page: 1,
-                    per_page: 5
+                    per_page: 10
                 },
+                reset_item: {},
+                show_reset_form: false,
+                reseting: false,
                 errors: new Errors()
             };
         },
@@ -164,13 +223,14 @@
             ErrorView,
             Confirm,
             BtnGroup,
-            BtnGroupItem
+            BtnGroupItem,
+            ConfirmResetInventory
         },
         methods: {
             fetchInventoryList() {
                 this.loading = true;
                 FluentFormsGlobal.$get({
-                    action: 'fluentform_get_global_inventory_list',
+                    action: 'fluentform_get_advanced_inventory_list',
                 })
                     .then(response => {
                         this.inventory_list = response.data.inventory_list;
@@ -197,35 +257,30 @@
             },
 
             getModalTitle() {
-                return this.inventory.id ? "Edit Inventory" : "Add Inventory";
+                return this.inventory.slug ? "Edit Inventory" : "Add Inventory";
             },
 
             store() {
                 this.loading = true;
-
-                let data = {
-                    inventory: this.inventory
-                }
                 FluentFormsGlobal.$post({
-                    action: 'fluentform_store_global_inventory_list',
+                    action: 'fluentform_store_advanced_inventory_list',
                     inventory: this.inventory
                 })
                     .then(response => {
-                        console.log(response);
                         if(response.data.success){
+                            this.modal = false;
                             this.$success(response.data.message);
                             this.fetchInventoryList();
                         }
+                        else{
+                            this.errors.record(response.data.errors);
+                        }
                     })
                     .fail((errors) => {
-                        if (errors.status == 400) {
-                            this.need_update = true;
-                        }
+                        this.errors.record(errors.responseJSON.data.errors);
                     })
                     .always(() => {
                         this.loading = false;
-                        this.modal = false;
-
                     });
             },
 
@@ -238,7 +293,7 @@
             remove(inventory) {
 
                 FluentFormsGlobal.$post({
-                    action: 'fluentform_delete_global_inventory_list',
+                    action: 'fluentform_delete_advanced_inventory_list',
                     slug: inventory.slug
                 })
                     .then(response => {
@@ -246,12 +301,13 @@
                             this.$success(response.data.message);
                             this.fetchInventoryList();
                         }
-
+                        else{
+                            this.$fail(response.data.errors);
+                        }
                     })
                     .fail((errors) => {
-                        if (errors.status == 400) {
-                            this.need_update = true;
-                        }
+                        console.log(errors)
+                        this.$fail(this.$t('Error, please reload and try again'));
                     })
                     .always(() => {
                         this.loading = false;
@@ -261,12 +317,61 @@
 
             goToPage(value) {
                 this.pagination.current_page = value;
-                // this.fetchInventoryList();
             },
 
             handleSizeChange(value) {
                 this.pagination.per_page = value;
-                // this.fetchInventoryList();
+            },
+            resetConfirm(item){
+                this.reset_item = item
+                this.show_reset_form = true;
+                this.confirm_reset_modal = item;
+            },
+            reset(){
+                this.reseting = true
+                FluentFormsGlobal.$post({
+                    action: 'fluentform_reset_advanced_inventory_item',
+                    slug: this.reset_item.slug
+                })
+                    .then(response => {
+                        if(response.data.success){
+                            this.$success(response.data.message);
+                            this.fetchInventoryList();
+                        }
+                        else{
+                            this.$fail(response.data.errors);
+                        }
+                    })
+                    .fail((errors) => {
+                        console.log(errors)
+                        this.$fail(this.$t('Error, please reload and try again'));
+                    })
+                    .always(() => {
+                        this.show_reset_form = false
+                        this.reseting = false
+                        this.reset_item = {};
+                    });
+            },
+            formatTableData(usedItems, totalQuantity) {
+                let items = [];
+                let sum =
+                    {
+                        'name': 'Total',
+                        'used_count': 0,
+                        'remaining': 0,
+                    };
+                for (const [name, used_count] of Object.entries(usedItems)) {
+                    let item = {
+                        'name': name,
+                        'used_count': parseInt(used_count),
+                        'remaining': parseInt(totalQuantity) - parseInt(used_count),
+                    }
+                    items.push(item);
+                    sum.used_count += item.used_count;
+                    sum.remaining += item.remaining;
+                }
+                items.push(sum)
+                return items;
             }
         },
         computed: {
