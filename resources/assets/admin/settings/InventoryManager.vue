@@ -66,16 +66,6 @@
                             <el-table-column :label="$t('Action')" width="160">
                                 <template slot-scope="scope">
 
-                                        <el-button
-                                                class="el-button--icon"
-                                                size="mini"
-                                                type="default"
-                                                icon="el-icon-refresh-left"
-                                                @click="resetConfirm(scope.row)"
-                                        >
-                                            Reset
-                                    </el-button>
-
                                     <el-button
                                             class="el-button--icon"
                                             size="mini"
@@ -91,6 +81,16 @@
                                                 icon="ff-icon ff-icon-trash"
                                         />
                                     </confirm>
+                                    <el-button
+                                            v-if="scope.row.details"
+                                            class="el-button--icon"
+                                            size="mini"
+                                            type="default"
+                                            icon="el-icon-refresh-left"
+                                            @click="resetConfirm(scope.row)"
+                                    >
+                                        Reset
+                                    </el-button>
                                 </template>
                             </el-table-column>
                         </el-table>
@@ -195,7 +195,6 @@
     import Confirm from "@/admin/components/confirmRemove.vue";
     import BtnGroup from '@/admin/components/BtnGroup/BtnGroup.vue';
     import BtnGroupItem from '@/admin/components/BtnGroup/BtnGroupItem.vue';
-    import ConfirmResetInventory from "@/admin/settings/Inventory/ConfirmResetInventory";
 
     export default {
         name: "InventoryManager",
@@ -224,7 +223,6 @@
             Confirm,
             BtnGroup,
             BtnGroupItem,
-            ConfirmResetInventory
         },
         methods: {
             fetchInventoryList() {
