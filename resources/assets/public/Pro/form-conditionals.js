@@ -81,7 +81,7 @@ const formConditional = function ($, $theForm, form) {
                     data[name] = '';
                     el.each((index, item) => {
                         if ($(item).is(':checked')) {
-                            data[name] = $(item).val();
+                            data[name] = $(item).is('[data-payment_value]') ? $(item).attr('data-payment_value') : $(item).val();
                         }
                     });
                 } else if (type == 'checkbox') {
@@ -89,7 +89,7 @@ const formConditional = function ($, $theForm, form) {
                     data[name] = [];
                     el.each((index, item) => {
                         if ($(item).is(':checked')) {
-                            data[name].push($(item).val());
+                            $(item).is('[data-payment_value]') ? data[name].push($(item).attr('data-payment_value')) : data[name].push($(item).val());
                         }
                     });
                 } else if (type == 'select-multiple') {
@@ -111,6 +111,8 @@ const formConditional = function ($, $theForm, form) {
                             file_urls += $(this).data('src');
                         });
                     data[name] = file_urls;
+                } else if(type == 'select-one') {
+                    data[name] = el.is('[data-payment_item]') ? el.find(':selected').attr('data-payment_value') : el.val();
                 } else {
                     data[name] = el.val();
                 }
