@@ -242,15 +242,24 @@ class BaseComponent
         }
 
         $labelMarkup = '';
-
-        if (! empty($data['settings']['label'])) {
+    
+        if (!empty($data['settings']['label'])) {
             $label = ArrayHelper::get($data, 'settings.label');
-
+            $ariaLabel = $label;
+            
+            $hasShortCodeIndex = strpos($label, '{dynamic.');
+            if ($hasShortCodeIndex !== false) {
+                $ariaLabel = trim(substr($label, 0, $hasShortCodeIndex));
+            }
+            
             $labelMarkup = sprintf(
-                '<div class="%s"><label %s aria-label="%s">%s</label> %s</div>',
+                '<div class="%1$s">
+                    <label %2$s aria-label="%3$s">%4$s</label>
+                    %5$s
+                </div>',
                 esc_attr($labelClass),
                 $forStr,
-                esc_attr($label),
+                esc_attr($ariaLabel),
                 fluentform_sanitize_html($label),
                 fluentform_sanitize_html($labelHelpText)
             );
