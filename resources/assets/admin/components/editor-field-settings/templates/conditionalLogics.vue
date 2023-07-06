@@ -25,7 +25,7 @@
                 >
                     <option value="" disabled>Select</option>
                     <template v-for="(dep, meta, i) in dependencies">
-                        <option 
+                        <option
                             v-if="meta != editItem.attributes.name"
                             :key="i"
                             :value="meta">{{ dep.field_label || meta }}
@@ -230,8 +230,16 @@
                                         field_label: formItem.settings.label
                                     }
                                 } else {
+                                    let options = [];
+                                    each(formItem.settings.pricing_options, (priceOption) => {
+                                        options.push({
+                                            label: priceOption.label,
+                                            value: priceOption.label
+                                        })
+                                    });
+
                                     dependencies[formItem.attributes.name] = {
-                                        options: formItem.settings.pricing_options,
+                                        options: options,
                                         field_label: formItem.settings.label
                                     }
                                 }
@@ -271,7 +279,7 @@
             },
             formatOptions(items) {
                 let options = [];
-                
+
                 each(items, (value, key) => options.push({
                     label: value,
                     value: key
