@@ -251,12 +251,9 @@ class BaseComponent
             if ($hasShortCodeIndex !== false) {
                 $ariaLabel = trim(substr($label, 0, $hasShortCodeIndex));
             }
-            
+    
             $labelMarkup = sprintf(
-                '<div class="%1$s">
-                    <label %2$s aria-label="%3$s">%4$s</label>
-                    %5$s
-                </div>',
+                '<div class="%1$s"><label %2$s aria-label="%3$s">%4$s</label>%5$s</div>',
                 esc_attr($labelClass),
                 $forStr,
                 esc_attr($ariaLabel),
