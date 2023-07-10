@@ -271,16 +271,10 @@ class FormValidationService
         // 1. limitNumberOfEntries
         // 2. scheduleForm
         // 3. requireLogin
-        $isAllowed = apply_filters_deprecated(
-            'fluentform_is_form_renderable',
-            [
-                $isAllowed,
-                $this->form
-            ],
-            FLUENTFORM_FRAMEWORK_UPGRADE,
-            'fluentform/is_form_renderable',
-            'Use fluentform/is_form_renderable instead of fluentform_is_form_renderable.'
-        );
+        
+        /* This filter is deprecated and will be removed soon */
+        $isAllowed = apply_filters('fluentform_is_form_renderable', $isAllowed, $this->form);
+        
         $isAllowed = apply_filters('fluentform/is_form_renderable', $isAllowed, $this->form);
         
         if (!$isAllowed['status']) {
@@ -351,16 +345,10 @@ class FormValidationService
     protected function validateNonce()
     {
         $formId = $this->form->id;
-        $shouldVerifyNonce = apply_filters_deprecated(
-            'fluentform_nonce_verify',
-            [
-                false,
-                $formId
-            ],
-            FLUENTFORM_FRAMEWORK_UPGRADE,
-            'fluentform/nonce_verify',
-            'Use fluentform/nonce_verify instead of fluentform_nonce_verify.'
-        );
+        $shouldVerifyNonce = false;
+        /* This filter is deprecated and will be removed soon. */
+        $shouldVerifyNonce = $this->app->applyFilters('fluentform_nonce_verify', $shouldVerifyNonce, $formId);
+    
         $shouldVerifyNonce = $this->app->applyFilters('fluentform/nonce_verify', $shouldVerifyNonce, $formId);
         
         if ($shouldVerifyNonce) {

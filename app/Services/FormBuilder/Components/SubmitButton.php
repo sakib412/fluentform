@@ -46,15 +46,10 @@ class SubmitButton extends BaseComponent
         $data = apply_filters('fluentform/rendering_field_data_' . $elementName, $data, $form);
 
         $btnStyle = ArrayHelper::get($data['settings'], 'button_style');
-        $noStyle = apply_filters_deprecated(
-            'fluentform_submit_button_force_no_style',
-            [
-                false
-            ],
-            FLUENTFORM_FRAMEWORK_UPGRADE,
-            'fluentform/submit_button_force_no_style',
-            'Use fluentform/submit_button_force_no_style instead of fluentform_submit_button_force_no_style'
-        );
+        
+        /* This filter is deprecated and will be removed soon */
+        $noStyle = apply_filters('fluentform_submit_button_force_no_style', false);
+        
         if (apply_filters('fluentform/submit_button_force_no_style', $noStyle)) {
             $btnStyle = 'no_style';
         }

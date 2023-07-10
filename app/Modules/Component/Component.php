@@ -742,23 +742,13 @@ class Component
         );
 
         $form = $this->app->applyFilters('fluentform/rendering_form', $form);
-
         $isRenderable = [
             'status'  => true,
             'message' => '',
         ];
-    
-        $isRenderable = apply_filters_deprecated(
-            'fluentform_is_form_renderable',
-            [
-                $isRenderable,
-                $form
-            ],
-            FLUENTFORM_FRAMEWORK_UPGRADE,
-            'fluentform/is_form_renderable',
-            'Use fluentform/is_form_renderable instead of fluentform_is_form_renderable.'
-        );
-
+        /* This filter is deprecated and will be removed soon */
+        $isRenderable = apply_filters('fluentform_is_form_renderable', $isRenderable, $form);
+        
         $isRenderable = $this->app->applyFilters('fluentform/is_form_renderable', $isRenderable, $form);
 
         if (is_array($isRenderable) && !$isRenderable['status']) {
