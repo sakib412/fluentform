@@ -102,6 +102,7 @@ return array(
     'FluentForm\\App\\Modules\\Registerer\\TranslationString' => $baseDir . '/app/Modules/Registerer/TranslationString.php',
     'FluentForm\\App\\Modules\\Renderer\\GlobalSettings\\Settings' => $baseDir . '/app/Modules/Renderer/GlobalSettings/Settings.php',
     'FluentForm\\App\\Modules\\Settings\\Settings' => $baseDir . '/app/Modules/Settings/Settings.php',
+    'FluentForm\\App\\Modules\\SubmissionHandler\\SubmissionHandler' => $baseDir . '/app/Modules/SubmissionHandler/SubmissionHandler.php',
     'FluentForm\\App\\Modules\\Track\\SetupModule' => $baseDir . '/app/Modules/Track/SetupModule.php',
     'FluentForm\\App\\Modules\\Track\\TrackModule' => $baseDir . '/app/Modules/Track/TrackModule.php',
     'FluentForm\\App\\Modules\\Turnstile\\Turnstile' => $baseDir . '/app/Modules/Turnstile/Turnstile.php',

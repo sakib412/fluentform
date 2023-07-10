@@ -130,6 +130,7 @@ class ComposerStaticInitb99e07d253bf4705bf50ef1db90791ef
         'FluentForm\\App\\Modules\\Registerer\\TranslationString' => __DIR__ . '/../..' . '/app/Modules/Registerer/TranslationString.php',
         'FluentForm\\App\\Modules\\Renderer\\GlobalSettings\\Settings' => __DIR__ . '/../..' . '/app/Modules/Renderer/GlobalSettings/Settings.php',
         'FluentForm\\App\\Modules\\Settings\\Settings' => __DIR__ . '/../..' . '/app/Modules/Settings/Settings.php',
+        'FluentForm\\App\\Modules\\SubmissionHandler\\SubmissionHandler' => __DIR__ . '/../..' . '/app/Modules/SubmissionHandler/SubmissionHandler.php',
         'FluentForm\\App\\Modules\\Track\\SetupModule' => __DIR__ . '/../..' . '/app/Modules/Track/SetupModule.php',
         'FluentForm\\App\\Modules\\Track\\TrackModule' => __DIR__ . '/../..' . '/app/Modules/Track/TrackModule.php',
         'FluentForm\\App\\Modules\\Turnstile\\Turnstile' => __DIR__ . '/../..' . '/app/Modules/Turnstile/Turnstile.php',

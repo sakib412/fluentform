@@ -11,15 +11,14 @@ use FluentForm\App\Modules\Acl\Acl;
  *
  * @var $app \FluentForm\Framework\Foundation\Application
  */
-$app->addAction('wp_ajax_nopriv_fluentform_submit', function () use ($app) {
-//    (new \FluentForm\App\Modules\Form\FormHandler($app))->onSubmit();
-    (new \FluentForm\App\Http\Controllers\SubmissionHandlerController())->submit();
 
+$app->addAction('wp_ajax_nopriv_fluentform_submit', function () use ($app) {
+    (new \FluentForm\App\Modules\SubmissionHandler\SubmissionHandler($app))->submit();
 });
 
 $app->addAction('wp_ajax_fluentform_submit', function () use ($app) {
-//    (new \FluentForm\App\Modules\Form\FormHandler($app))->onSubmit();
-    (new \FluentForm\App\Http\Controllers\SubmissionHandlerController())->submit();
+    //    (new \FluentForm\App\Modules\Form\FormHandler($app))->onSubmit();
+    (new \FluentForm\App\Modules\SubmissionHandler\SubmissionHandler($app))->submit();
 });
 
 /*
