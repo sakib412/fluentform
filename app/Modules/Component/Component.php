@@ -712,7 +712,7 @@ class Component
             $feedText = apply_filters('fluentform/shortcode_feed_text', $feedText, $form);
             return $feedText;
         }
-
+        
         $formSettings = wpFluent()
             ->table('fluentform_form_meta')
             ->where('form_id', $form_id)
@@ -933,7 +933,7 @@ class Component
 
         if (!$this->app->applyFilters('fluentform/disabled_analytics', $disableAnalytics)) {
             if (!Acl::hasAnyFormPermission($form->id)) {
-                (new \FluentForm\App\Http\Controllers\AnalyticsController())->store($form->id);
+                (new \FluentForm\App\Services\Analytics\AnalyticsService())->store($form->id);
             }
         }
 

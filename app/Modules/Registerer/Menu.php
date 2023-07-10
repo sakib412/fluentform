@@ -749,16 +749,16 @@ class Menu
             'fluentform/disabled_analytics',
             'Use fluentform/disabled_analytics instead of fluentform-disabled_analytics.'
         );
-
+    
         $data = [
-            'plugin'             => $this->app->config->get('app.slug'),
-            'formsCount'         => $formsCount,
-            'hasPro'             => defined('FLUENTFORMPRO'),
-            'upgrade_url'        => fluentform_upgrade_url(),
-            'adminUrl'           => admin_url('admin.php?page=fluent_forms'),
+            'plugin'                  => $this->app->config->get('app.slug'),
+            'formsCount'              => $formsCount,
+            'hasPro'                  => defined('FLUENTFORMPRO'),
+            'upgrade_url'             => fluentform_upgrade_url(),
+            'adminUrl'                => admin_url('admin.php?page=fluent_forms'),
             'adminUrlWithoutPageHash' => admin_url('admin.php'),
-            'isDisableAnalytics' => $this->app->applyFilters('fluentform/disabled_analytics', $isDisabledAnalytics),
-            'plugin_public_url'    => fluentformMix(),
+            'isDisableAnalytics'      => $this->app->applyFilters('fluentform/disabled_analytics', $isDisabledAnalytics),
+            'plugin_public_url'       => fluentformMix(),
         ];
 
         $data = apply_filters_deprecated(

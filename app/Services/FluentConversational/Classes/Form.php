@@ -569,8 +569,7 @@ class Form
 
         if (!apply_filters('fluentform/disabled_analytics', $disableAnalytics)) {
             if (!Acl::hasAnyFormPermission($form->id)) {
-                (new \FluentForm\App\Http\Controllers\AnalyticsController())->store($form->id);
-
+                (new \FluentForm\App\Services\Analytics\AnalyticsService())->store($formId);
             }
         }
 
@@ -773,7 +772,7 @@ class Form
 
         if (!apply_filters('fluentform/disabled_analytics', $status)) {
             if (!Acl::hasAnyFormPermission($form->id)) {
-                (new \FluentForm\App\Http\Controllers\AnalyticsController())->store($form->id);
+                (new \FluentForm\App\Services\Analytics\AnalyticsService())->store($form->id);
             }
         }
         wpFluentForm('view')->render('public.conversational-form', [
